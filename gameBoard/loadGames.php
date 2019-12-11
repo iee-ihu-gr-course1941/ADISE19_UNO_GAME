@@ -1,9 +1,10 @@
 <?php
     include('../server.php');
-    $sql = "SELECT * FROM games";
+    $sql = "SELECT * FROM games where started = false";
     $result = mysqli_query($db, $sql);
 
     while ($row = mysqli_fetch_assoc($result)) {
+        $gameName = $row['gamename'];
         echo "<form class='.content' action='joingame.php' method='POST'>";
         echo "<p>";
         echo "   Game ID: ";
@@ -11,11 +12,9 @@
         echo $row['gameid'];
         echo "</b>";
         echo "  Name: ";
-        $gameID = $row['gameid'];
-        echo $row['gamename'];
         echo "     ";
         echo "<form class='.noBorder' action='joingame.php' method='POST'>";
-        echo "<input name='gameID' placeholder='Game Name' value=$gameID hidden=true>";
+        echo "<input name='gameName' placeholder='Game Name' value=$gameName hidden=true>";
         echo "<button type='submit'> Join </button>";
         echo "</form>";
         echo "<p>";

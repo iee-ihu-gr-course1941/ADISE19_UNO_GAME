@@ -1,6 +1,6 @@
 <?php
     include('../server.php');
-
+    session_start();
 
         /* 1
          *  get from session the users name
@@ -12,14 +12,15 @@
         $adminUserName = $_SESSION['username'];
         echo $adminUserName;
         $gameName = $_POST['gamename'];
-
+        $_SESSION['gamename'] = $gameName;
 
         $sql = "SELECT id FROM users WHERE username='$adminUserName'";
         $resultID = mysqli_query($db, $sql);
         $firstrow = mysqli_fetch_assoc($resultID);
         $adminID = $firstrow['id'];
         echo $adminID;
-
+        $_SESSION["userID"] = $adminID;
+        $_SESSION["isAdmin"] = true;
 
 
         /*  2
@@ -29,25 +30,15 @@
         $sql = "INSERT INTO games (adminid, gamename, finished, started) VALUES ('$adminID', '$gameName',false, false)";
         $result = mysqli_query($db, $sql);
 
-        /* 3
-         * Now we have from 1 the users id so we get the game id from the games table
-         *
-         */
-
-        $sql = "SELECT gameid FROM games WHERE adminid='$adminID'";
-        $resultID = mysqli_query($db, $sql);
-        $firstrow = mysqli_fetch_assoc($resultID);
-        $gameID = $firstrow['gameid'];
-        $_SESSION['gameID'] = $gameID;
-        echo $gameID;
-
 
         /* 4
             gametousersconnection keeps many to many assotiation between users and games
             we insert the assotiation between the user and the game
         */
-        $sql = "INSERT INTO gametousersconnection (userid, gameid) VALUES ('$adminID','$gameID')";
+        $sql = "INSERT INTO gametousersconnection (userid, gameName) VALUES ('$adminID','$gameName')";
         $resultID = mysqli_query($db, $sql);
+
+
 
         header("location: ../unogame");
 
