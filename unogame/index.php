@@ -18,8 +18,65 @@ if (isset($_GET['logout'])) {
 <head>
     <title>Home</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <link rel="stylesheet" type="text/css" href="gamecss.css">
+    <script>
+        function showMessage(messageHTML) {
+                document.getElementById("id_status").title = messageHTML
+           }
 
+
+         function updateSubtitleStatus() {
+            document.getElementById("id_subtitle").innerHTML = "Game started";
+
+         }
+
+         function buttonStartDidClick() {
+            document.getElementById("btnSend").submit();
+         }
+
+         function reloadUI() {
+                                    event.preventDefault();
+                                    $('#chat-user').attr("type","hidden");
+                                    var messageJSON = {
+                                        chat_user: "userData",
+                                        chat_message: "reload"
+                                    };
+                                    websocket.send(JSON.stringify(messageJSON));
+           }
+
+
+    $(document).ready(function(){
+    		var websocket = new WebSocket("ws://localhost:8090/demo/php-socket.php");
+    		websocket.onopen = function(event) {
+    			showMessage("Connection is established!");
+    		}
+    		websocket.onmessage = function(event) {
+    		    updateSubtitleStatus()
+    			var Data = JSON.parse(event.data);
+    			showMessage("message="+Data.message_type+" "+Data.message+"");
+    			$('#chat-message').val('');
+    		};
+
+    		websocket.onerror = function(event){
+    			showMessage("Problem due to some Error");
+    		};
+    		websocket.onclose = function(event){
+    			showMessage("Connection Closed");
+    		};
+
+
+    		$('#id_reload_UI').on("submit",function(event){
+    			event.preventDefault();
+    			$('#chat-user').attr("type","hidden");
+    			var messageJSON = {
+    				chat_user: "userData",
+    				chat_message: "reload"
+    			};
+    			websocket.send(JSON.stringify(messageJSON));
+    		});
+    	});
+    </script>
 
     <script>
         $(document).ready(function () {
@@ -61,6 +118,7 @@ if (isset($_GET['logout'])) {
 <body>
 <div class="header">
     <h2>UNO</h2>
+    <h4 id="id_subtitle">waiting for host... </h4>
 
 
     <div id="exit">
@@ -90,6 +148,16 @@ if (isset($_GET['logout'])) {
 
 
 </div>
+
+<div>
+    <button id="id_status" value = "status"> sadfasdfasdfasdf</button>
+</div>
+
+<form name="reload_UI" id="id_reload_UI">
+			<div></div>
+			<input type="submit" id="btnSend" name="send-chat-message" value="Send" >
+		</form>
+
 
 </body>
 </html>
