@@ -32,4 +32,28 @@ if ($db->query($sql) === TRUE) {
  }
 
 
+ $sql = "DELETE FROM game_to_last_card";
+ if ($db->query($sql) === TRUE) {
+     echo "game_to_last_card cleared successfully<p>";
+ }else {
+      echo "game_to_last_card failed on clear<p>";
+  }
+
+
+  $sql = "DELETE FROM game_to_not_played_cards";
+  if ($db->query($sql) === TRUE) {
+       echo "game_to_not_played_cards cleared successfully<p>";
+   }else {
+        echo "game_to_not_played_cards failed on clear<p>";
+    }
+
+
+    $sql = "DELETE FROM gametoorder";
+      if ($db->query($sql) === TRUE) {
+           echo "gametoorder cleared successfully<p>";
+       }else {
+            echo "gametoorder failed on clear<p>";
+        }
+
+
 ?>

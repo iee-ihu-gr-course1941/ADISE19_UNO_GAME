@@ -98,9 +98,10 @@ if (isset($_GET['logout'])) {
     <script type='text/javascript'>
         function buttonStartDidClick() {
                 document.getElementById('buttonStart').style.display='none';
-                $.get('startGame.php'), function (data) {
+                window.location.href = "./startGame.php"; //remove this line!! call the below
+                /*$.get('startGame.php'), function (data) {
 
-                }
+                }*/
         }
     </script>
     <script>
