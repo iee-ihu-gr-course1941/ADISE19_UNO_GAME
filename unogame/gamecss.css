@@ -9,15 +9,41 @@
     margin: 20px auto 0px;
 }
 
+
+.currentPlayerCard {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 150px;
+    height: 200px;
+    text-align: center;
+    margin: 20px auto 0px;
+    background: #3c763d;
+}
+
+
 .parentsParent {
+    transition: 0.3s;
+    text-align: center;
+    display: inline-block;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
+.parentsParentCurrentPlayer {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
     text-align: center;
+    background: #3c763d;
 }
 
 .card:hover {
     box-shadow: 0 8px 16px 0 rgba(1,1,1,1);
 }
+.currentPlayerCard:hover {
+    box-shadow: 0 8px 16px 0 rgba(1,1,1,1);
+}
+
 
 .container {
     padding: 2px 16px;
@@ -38,7 +64,29 @@
     width: 50%;
 }
 
+.currentCardImage {
+    width: 120px;
+}
+
 .unoImage {
     width: 50px;
     text-align: center;
+}
+
+.content {
+    text-align: center;
+    margin: 0px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 0px 0px 10px 10px;
+}
+
+.contentOpponents {
+    text-align: center;
+    margin: 0px auto;
+    padding-bottom: 50px;
+    padding-left: 150px;
+    padding-top: 0px;
+    background: white;
+    border-radius: 0px 0px 10px 10px;
 }

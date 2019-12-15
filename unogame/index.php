@@ -21,9 +21,22 @@ if (isset($_GET['logout'])) {
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <link rel="stylesheet" type="text/css" href="gamecss.css">
     <script>
+
         function showMessage(messageHTML) {
-                document.getElementById("id_status").title = messageHTML
-           }
+            $("#opponents").load("loadOpponents.php", {
+
+            })
+
+            $("#main_board_div").load("loadMainBoard.php", {
+
+            })
+
+            $("#id_myCards_div").load("loadMyCards.php", {
+
+            })
+
+
+        }
 
 
          function updateSubtitleStatus() {
@@ -36,14 +49,15 @@ if (isset($_GET['logout'])) {
          }
 
          function reloadUI() {
-                                    event.preventDefault();
-                                    $('#chat-user').attr("type","hidden");
-                                    var messageJSON = {
-                                        chat_user: "userData",
-                                        chat_message: "reload"
-                                    };
-                                    websocket.send(JSON.stringify(messageJSON));
+                document.getElementById('id_reload_UI').submit();
            }
+
+
+          function didClickPass() {
+
+          }
+
+
 
 
     $(document).ready(function(){
@@ -98,10 +112,11 @@ if (isset($_GET['logout'])) {
     <script type='text/javascript'>
         function buttonStartDidClick() {
                 document.getElementById('buttonStart').style.display='none';
-                window.location.href = "./startGame.php"; //remove this line!! call the below
-                /*$.get('startGame.php'), function (data) {
+                //window.location.href = "./startGame.php"; // uncomment me to test start.php
+                $.get('startGame.php'), function (data) {
 
-                }*/
+                }
+                reloadUI();
         }
     </script>
     <script>
@@ -138,26 +153,34 @@ if (isset($_GET['logout'])) {
     </div>
 
 </div>
-<div class="content">
+
+
+
+<div class="contentOpponents">
 
     <div id="opponents">
 
 
     </div>
 
+</div>
 
+
+<div id="main_board_div" class="content">
 
 
 </div>
 
-<div>
-    <button id="id_status" value = "status"> sadfasdfasdfasdf</button>
+
+<div id="id_myCards_div" class="content">
+
+
 </div>
+
 
 <form name="reload_UI" id="id_reload_UI">
-			<div></div>
-			<input type="submit" id="btnSend" name="send-chat-message" value="Send" >
-		</form>
+    <input type="submit" id="btnSend" name="form_that_reloads_sockets" value="Send" hidden=true >
+</form>
 
 
 </body>
