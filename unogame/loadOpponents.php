@@ -50,7 +50,7 @@ if ($isGameStarted == false) {
                 $sql_select_current_player_result_firstRow = mysqli_fetch_assoc($sql_select_current_player_result);
                 $currentPlayerID = $sql_select_current_player_result_firstRow['userid'];
                 $isThisUsersOrder = false;
-                if (strcmp($currentPlayerID, $userID) == true) {
+                if (strcmp($currentPlayerID, $userID) == 0) {
                     $isThisUsersOrder = true;
                 }
 
@@ -71,9 +71,9 @@ if ($isGameStarted == false) {
 }
 
 function echoPlayer($username, $playing = false, $numberOfCards = 0) {
-    $currentPlayerCardtype = "currentPlayerCard";
+    $currentPlayerCardtype = "card";
     if ($playing == true) {
-        $currentPlayerCardtype = "card";
+        $currentPlayerCardtype = "currentPlayerCard";
     }
     echo "<div class='parentsParent'>";
     echo "<div class='aParent'>";

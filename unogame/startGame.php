@@ -1,5 +1,6 @@
 <?php
 include('../server.php');
+include './globalFunctions.php';
 $currentGameName = $_SESSION['gamename'];
 echo "game with game id $currentGameName started";
 
@@ -65,7 +66,7 @@ while ($row = mysqli_fetch_assoc($result_getAllPlayers)) {
 
 // After every player gets a card, set the card that opens the from the deck
 $id_of_first_card_in_deck = array_shift($_cardIds_cashed);
-$sql_give_card_to_player = "INSERT INTO game_to_last_card (gamename, lastCardId) VALUES ('$currentGameName', '$id_of_card_to_give_to_player')";
+$sql_give_card_to_player = "INSERT INTO game_to_last_card (gamename, lastCardId) VALUES ('$currentGameName', '$id_of_first_card_in_deck')";
 if ($db->query($sql_give_card_to_player) === TRUE) {
        // echo "INSERT INTO game_to_last_card ('$id_of_card_to_give_to_player', '$_tmp_userid') Succeed<p>";
 } else {
@@ -78,7 +79,6 @@ deleteFromGameToNotPlayedCards($currentGameName,$id_of_first_card_in_deck);
 // Get all players that play in gametoorder table
 $sql_get_players_of_game = "SELECT userid FROM gametoorder where playerorder = (SELECT MIN(playerorder) FROM gametoorder)"; // GET THE PLAYER WITH THE min order sql query
 $result_ID_first_player_sql_result = mysqli_query($db, $sql_get_players_of_game); // store first players id into a variable
-
 $firstrow_result_ID_first_player = mysqli_fetch_assoc($result_ID_first_player_sql_result);
 $firstPlayerID = $firstrow_result_ID_first_player['userid'];
 $sql_setUP_whoPlays = "INSERT INTO gametowhoplays (gamename, userid) VALUES ('$currentGameName', '$firstPlayerID')";
@@ -87,21 +87,11 @@ if ($db->query($sql_setUP_whoPlays) === TRUE) {
 } else {
        echo "INSERT INTO gametowhoplays (gamename, userid) VALUES ('$currentGameName', '$firstPlayerID')". $db->error;
 }
-?>
 
+//Now we call the function that checks if the next player is going to have any effect based on the first card
+// $firstPlayerID is the first player id that is going to get the panishment
+// $id_of_first_card_in_deck is the card that randomly oppened in the board
 
+checkIfPlayerWillGetExtraCards($firstPlayerID, $id_of_first_card_in_deck);
 
-
-<?php
-function deleteFromGameToNotPlayedCards($_currentGameName,$_id_of_card_to_give_to_player) {
-        global $db;
-        echo("deleteFromGameToNotPlayedCards: $_currentGameName - $_id_of_card_to_give_to_player");
-        $removeFrom_playedCards_sql = "DELETE FROM game_to_not_played_cards WHERE gamename = '$_currentGameName' AND availableCardId = '$_id_of_card_to_give_to_player'";
-        $random = mysqli_query($db, $removeFrom_playedCards_sql);
-        if ($db->query($removeFrom_playedCards_sql) === TRUE) {
-                echo "Succeed DELETE FROM game_to_not_played_cards ('$_currentGameName', '$_id_of_card_to_give_to_player') Succeed<p>";
-        } else {
-                echo "Error on game_to_not_played_cards creating table: " . $db->error;
-        }
-}
 ?>
