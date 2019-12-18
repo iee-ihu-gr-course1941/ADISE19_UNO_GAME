@@ -1,5 +1,6 @@
 <?php
 include('../server.php');
+include('./globalFunctions.php');
 
 $currentGameName = $_SESSION['gamename'];
 $currentPlayerUserName = $_SESSION['username'];
@@ -33,6 +34,33 @@ if ($isGameStarted == true) {
     // now on Assets -> cards folder we added the cards with name  value_color.gif
     $cardResourceURL = "Assets/cards/".$lastCardValue."_".$lastCardColor.".gif";
     echo "<img class='currentCardImage' width='120px' src='$cardResourceURL' alt='last played card'>";
+
+    // now we check if the last played card is balader so that we show the selected color in the board
+    if (($lastCardValue == "balader") or ($lastCardValue == "baladerAddFour")) {
+        $sql_query = "SELECT color from baladerselectedcolor where gamename = '$currentGameName'";
+        $sql_query_result = mysqli_query($db, $sql_query);
+        $sql_query_result_first_row = mysqli_fetch_assoc($sql_query_result);
+        $color = $sql_query_result_first_row['color'];
+
+        echo "<img class='currentPlayingColorInBalader' style='background-color:";
+        switch ($color) {
+            case "green":
+                echo "#30911F";
+                break;
+            case "red":
+                echo "#ff0000";
+                break;
+            case "blue":
+                echo "#89cff0";
+                break;
+           case "yellow":
+                echo "#ffff00";
+                break;
+        }
+       echo "'>";
+    }
+
+
     echo "<button onClick='didClickPass()'>Pass</button>";
 }
 

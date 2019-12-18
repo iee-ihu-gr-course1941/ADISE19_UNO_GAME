@@ -20,6 +20,16 @@
     background: #3c763d;
 }
 
+.currentPlayingColorInBalader {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    margin: 20px auto 0px;
+    background: #3c763d;
+}
+
 
 .parentsParent {
     transition: 0.3s;
@@ -89,4 +99,11 @@
     padding-top: 0px;
     background: white;
     border-radius: 0px 0px 10px 10px;
+}
+
+
+
+.color-box {
+    width: 100px;
+    height: 100px;
 }

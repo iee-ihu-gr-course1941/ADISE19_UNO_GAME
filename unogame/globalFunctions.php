@@ -1,6 +1,7 @@
 <?php
 
 include('../server.php');
+include('../Model/Card.php');
 
 function checkIfPlayerWillGetExtraCards($nextPlayerID, $cardThatJustPlayed) {
     global $db;
@@ -67,5 +68,105 @@ function deleteFromGameToNotPlayedCards($_currentGameName,$_id_of_card_to_give_t
                 echo "Error on game_to_not_played_cards creating table: " . $db->error;
         }
 }
+
+function checkIfUserIsPlaying($userID, $gameName): Bool {
+    global $db;
+    $sql_to_get_Now_Playing_UserID = "SELECT userid from gametowhoplays where gamename = '$gameName'";
+    $sql_result_to_get_Now_Playing_UserID = mysqli_query($db, $sql_to_get_Now_Playing_UserID);
+    $firstrow_sql_result_to_Now_Playing_UserID = mysqli_fetch_assoc($sql_result_to_get_Now_Playing_UserID);
+    $currentPlayingUserID = $firstrow_sql_result_to_Now_Playing_UserID['userid'];
+    if (strcmp($currentPlayingUserID,$userID) == 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+function getIfCardIsValid($cardPlayedID, $gamename): Bool {
+    global $db;
+    // First we need to get the details of the card that is about to be played
+    // If the details of the card are not a balader card
+    // then we need to get the details of the last played card
+    $cardThatJustPlayed = getDetailsOfCard($cardPlayedID);
+    if (($cardThatJustPlayed->value == "balader") or ($cardThatJustPlayed->value == "baladerAddFour")) {
+        return true;
+    } else {
+        // Now we have to get the id of the last played card so that we can compare the cards
+        $sql_query = "SELECT lastCardId from game_to_last_card where gamename = '$gamename'";
+        $sql_query_result = mysqli_query($db, $sql_query);
+        $sql_query_result_first_row = mysqli_fetch_assoc($sql_query_result);
+        $lastCardId = $sql_query_result_first_row['lastCardId'];
+
+        // Now we can get the card details from getDetailsOfCard function
+        $lasPlayedCardDetails = getDetailsOfCard($lastCardId);
+
+
+        if (($lasPlayedCardDetails->value == $cardThatJustPlayed->value) or (($lasPlayedCardDetails->color == $cardThatJustPlayed->color))) {
+            return true;
+        } else if (($lasPlayedCardDetails->value == "balader") or ($lasPlayedCardDetails->value == "baladerAddFour")) {
+            // WE NEED TO CHECK IF THE LAST CARD WAS BALADER!!!!
+            $sql_query = "SELECT * from baladerSelectedColor where gamename = '$gamename'";
+            $sql_query_result = mysqli_query($db, $sql_query);
+            $sql_query_result_first_row = mysqli_fetch_assoc($sql_query_result);
+            $color = $sql_query_result_first_row['color'];
+            if ($cardThatJustPlayed->color == $color) {
+                return true;
+            } else {
+                return false; // SOS Check before add more code!!!
+            }
+        } else {
+            return false; // SOS Check before add more code!!!
+        }
+
+    }
+
+}
+
+function getDetailsOfCard($cardPlayedID): Card {
+    global $db;
+    $sql_query = "SELECT * from cards where cardid = '$cardPlayedID'";
+    $sql_query_result = mysqli_query($db, $sql_query);
+    $sql_query_result_first_row = mysqli_fetch_assoc($sql_query_result);
+    $color = $sql_query_result_first_row['color'];
+    $value = $sql_query_result_first_row['value'];
+    $cardToReturn = new Card();
+    $cardToReturn->id = $cardPlayedID;
+    $cardToReturn->value = $value;
+    $cardToReturn->color = $color;
+    return $cardToReturn;
+}
+
+function updateBaladerSelectedColor($gameName, $color) {
+    global $db;
+    $sql_query = "UPDATE baladerselectedcolor set color = '$color' WHERE gamename = '$gameName'";
+    $sql_query_result = mysqli_query($db, $sql_query);
+    $sql_query_result_first_row = mysqli_fetch_assoc($sql_query_result);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ?>

@@ -34,8 +34,29 @@ if (isset($_GET['logout'])) {
             $("#id_myCards_div").load("loadMyCards.php", {
 
             })
+        }
 
 
+
+         /*
+         *  didSelectImage(selectedCardID) is a function that passes with post method to playCard.php the id of the card that the player just played.
+         *  if it's not the current user he will get a not_your_turn data response and he will notified with an alert
+         */
+        function didSelectImage(selectedCardID) {
+
+            $.ajax({
+                url: "playCard.php",
+                type: "POST",
+                data: {"selectedCardID": selectedCardID},
+                success: function(data) {
+                     console.log("data = " + data);
+                    if (data.localeCompare("not_your_turn") == 0) {
+                        alert("It's not your turn!! ");
+                    } else if (data.localeCompare("you_cant_play_this_card") == 0) {
+                        alert("You can't play this card!");
+                    }
+                }
+            });
         }
 
 
@@ -113,10 +134,10 @@ if (isset($_GET['logout'])) {
         function buttonStartDidClick() {
                 document.getElementById('buttonStart').style.display='none';
                 //window.location.href = "./startGame.php"; // uncomment me to test start.php
-                $.get('startGame.php'), function (data) {
+                $.get('startGame.php', function (data) {
+                    reloadUI();
+                });
 
-                }
-                reloadUI();
         }
     </script>
     <script>

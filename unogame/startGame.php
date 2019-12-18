@@ -1,6 +1,6 @@
 <?php
 include('../server.php');
-include './globalFunctions.php';
+include('./globalFunctions.php');
 $currentGameName = $_SESSION['gamename'];
 echo "game with game id $currentGameName started";
 
@@ -73,6 +73,22 @@ if ($db->query($sql_give_card_to_player) === TRUE) {
        echo "Error on INSERT INTO game_to_last_card ('$id_of_card_to_give_to_player'". $db->error;
 }
 deleteFromGameToNotPlayedCards($currentGameName,$id_of_first_card_in_deck);
+
+// Now we initialize the row in baladerSelectedColor table so that it can be updated with the selected color if it opens.id
+$sql_give_card_to_player = "INSERT INTO baladerselectedcolor (gamename, color) VALUES ('$currentGameName', '')";
+if ($db->query($sql_give_card_to_player) === TRUE) {
+       // echo "INSERT INTO game_to_last_card ('$id_of_card_to_give_to_player', '$_tmp_userid') Succeed<p>";
+} else {
+       echo "Error on INSERT INTO baladerselectedcolor ('$id_of_card_to_give_to_player'". $db->error;
+}
+
+
+// Here we have to check if the card that oppened in the deck is a balader card
+$cardThatJustOpened = getDetailsOfCard($id_of_first_card_in_deck);
+if (($cardThatJustOpened->value == "balader") or ($cardThatJustOpened->value == "baladerAddFour")) {
+    // here we could get a random color!! but for simplicity we initialize the deck with uno color -> red
+    updateBaladerSelectedColor($currentGameName,"red");
+}
 
 
 // Now we configure the value of the player that playes first

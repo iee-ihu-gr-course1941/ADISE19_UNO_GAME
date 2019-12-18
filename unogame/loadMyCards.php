@@ -37,8 +37,9 @@ if ($isGameStarted == true) {
 
          $tmpCardValue = $sql_result_getCardProperties_firstRow['value'];
          $tmpCardColor = $sql_result_getCardProperties_firstRow['color'];
+
          $cardResourceURL = "Assets/cards/".$tmpCardValue."_".$tmpCardColor.".gif";
-         echo "<img class='currentCardImage' width='120px' src='$cardResourceURL' alt='last played card'>";
+         echo "<img class='currentCardImage' onclick='didSelectImage($tmp_cardID)' width='120px' src='$cardResourceURL' alt='last played card'>";
     }
 
 

@@ -1,8 +1,6 @@
 <?php
 
 include('../server.php');
-
-
 $sql = "CREATE TABLE gametowhoPlays (
     gamename varchar (100) NOT NULL ,
     userid int(11) NOT NULL

@@ -1,5 +1,8 @@
-<?php 
-	session_start();
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+	//session_start();
 
 	// variable declaration
 	$username = "";
