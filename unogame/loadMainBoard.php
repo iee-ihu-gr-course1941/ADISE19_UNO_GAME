@@ -45,19 +45,22 @@ if ($isGameStarted == true) {
         echo "<img class='currentPlayingColorInBalader' style='background-color:";
         switch ($color) {
             case "green":
-                echo "#30911F";
+                echo "#30911F'";
                 break;
             case "red":
-                echo "#ff0000";
+                echo "#ff0000'";
                 break;
             case "blue":
-                echo "#89cff0";
+                echo "#89cff0'";
                 break;
            case "yellow":
-                echo "#ffff00";
+                echo "#ffff00'";
+                break;
+            case "":
+                echo "' hidden = true";
                 break;
         }
-       echo "'>";
+       echo ">";
     }
 
 

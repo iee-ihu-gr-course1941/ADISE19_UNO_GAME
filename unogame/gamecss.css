@@ -27,7 +27,6 @@
     height: 100px;
     text-align: center;
     margin: 20px auto 0px;
-    background: #3c763d;
 }
 
 
@@ -50,10 +49,17 @@
 .card:hover {
     box-shadow: 0 8px 16px 0 rgba(1,1,1,1);
 }
+
+.currentCardImage:hover {
+    transform: scale(1.2);
+    box-shadow: 0 8px 16px 0 rgba(1,1,1,1);
+    position: relative;
+    top: -20px;
+}
+
 .currentPlayerCard:hover {
     box-shadow: 0 8px 16px 0 rgba(1,1,1,1);
 }
-
 
 .container {
     padding: 2px 16px;

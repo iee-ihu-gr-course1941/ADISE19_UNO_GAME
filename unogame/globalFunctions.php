@@ -4,6 +4,7 @@ include('../server.php');
 include('../Model/Card.php');
 
 function checkIfPlayerWillGetExtraCards($nextPlayerID, $cardThatJustPlayed) {
+    echo "checkIfPlayerWillGetExtraCards! :-)";
     global $db;
     $sql_to_get_card_details = "SELECT value from cards where cardid = '$cardThatJustPlayed'";
     $sql_result_to_get_card_details = mysqli_query($db, $sql_to_get_card_details);
@@ -11,14 +12,15 @@ function checkIfPlayerWillGetExtraCards($nextPlayerID, $cardThatJustPlayed) {
     $cardThatJustPlayedValue = $firstrow_sql_result_to_get_card_details['value'];
 
     // now we have the value of the card and we will check if he will get extra cards
+    echo "cardThatJustPlayedValue: '$cardThatJustPlayedValue'";
     if (strcmp($cardThatJustPlayedValue,'plus2') == 0) {
         // We add 2 cards to the player
         addCardsToPlayer($nextPlayerID, 2);
-        print("we add 2 cards to player, value = '$cardThatJustPlayedValue'");
+        echo "we add 2 cards to player, value = '$cardThatJustPlayedValue'";
     } else if (strcmp($cardThatJustPlayedValue,'baladerAddFour') == 0) {
         // We add 4 cards to the player
         addCardsToPlayer($nextPlayerID, 4);
-        print("we add 4 cards to player, value = '$cardThatJustPlayedValue'");
+        echo "we add 4 cards to player, value = '$cardThatJustPlayedValue'";
     }
 }
 
@@ -101,6 +103,10 @@ function getIfCardIsValid($cardPlayedID, $gamename): Bool {
         // Now we can get the card details from getDetailsOfCard function
         $lasPlayedCardDetails = getDetailsOfCard($lastCardId);
 
+        echo "<p>lasPlayedCardDetails->value: '$lasPlayedCardDetails->value' <p>";
+        echo "cardThatJustPlayed->value: '$cardThatJustPlayed->value'<p>";
+        echo "lasPlayedCardDetails->color: '$lasPlayedCardDetails->color'<p>";
+        echo "cardThatJustPlayed->color: '$cardThatJustPlayed->color'<p>";
 
         if (($lasPlayedCardDetails->value == $cardThatJustPlayed->value) or (($lasPlayedCardDetails->color == $cardThatJustPlayed->color))) {
             return true;
@@ -137,14 +143,96 @@ function getDetailsOfCard($cardPlayedID): Card {
     return $cardToReturn;
 }
 
-function updateBaladerSelectedColor($gameName, $color) {
+function updateBaladerSelectedColor($currentGameName, $color) {
     global $db;
-    $sql_query = "UPDATE baladerselectedcolor set color = '$color' WHERE gamename = '$gameName'";
-    $sql_query_result = mysqli_query($db, $sql_query);
-    $sql_query_result_first_row = mysqli_fetch_assoc($sql_query_result);
+    $sql_query = "UPDATE baladerselectedcolor set color = '$color' WHERE gamename = '$currentGameName'";
+    if ($db->query($sql_query) === TRUE) {
+        echo "UPDATE baladerselectedcolor succeed new color: '$color'";
+    } else {
+        echo "UPDATE baladerselectedcolor failed ". $db->error;
+    }
+}
+
+function applyCardEffects($currentGameName, $cardID, $currentPlayerID, $colorForBalader) {
+    global $db;
+    $sql_give_card_to_player = "UPDATE game_to_last_card SET lastCardId = '$cardID' where gamename = '$currentGameName'";
+    if ($db->query($sql_give_card_to_player) === TRUE) {
+           // echo "INSERT INTO game_to_last_card ('$id_of_card_to_give_to_player', '$_tmp_userid') Succeed<p>";
+    } else {
+           echo "Error on UPDATE game_to_last_card ('$cardID'". $db->error;
+    }
+    deleteFromGameToNotPlayedCards($currentGameName,$cardID);
+
+    $card = getDetailsOfCard($cardID);
+    if (($card->color == "balader") or ($card->color == "baladerAddFour")){
+        updateBaladerSelectedColor($currentGameName, $colorForBalader);
+    } else if ($card->value == "loseOrder") {
+       // Call function for loose order
+    } else if ($card->value == "switchOrder") {
+       // Call function for switch order
+    }
+    $nextPlayerID = getNextPlayerID($currentGameName, $currentPlayerID);
+    // Now we check if next player needs to get extra cards!
+    if (($card->color == "plus2") or ($card->color == "baladerAddFour")){
+        checkIfPlayerWillGetExtraCards($nextPlayerID, $cardID);
+    }
+    updateWhoPlays($currentGameName, $nextPlayerID);
+}
+
+function updateWhoPlays($currentGameName, $newPlayerID) {
+    global $db;
+    $sql_query = "UPDATE gametowhoplays set userid = '$newPlayerID' WHERE gamename = '$currentGameName'";
+    if ($db->query($sql_query) === TRUE) {
+        echo "UPDATE gametowhoplays succeed new userid Players: '$newPlayerID'";
+    } else {
+            console.log("UPDATE gametowhoplays new userid failed  ". $db->error);
+    }
 }
 
 
+function getNextPlayerID($currentGameName, $currentPlayerID): Int {
+    global $db;
+    $currentPlayerOrder = getCurrentPlayersOrder($currentGameName, $currentPlayerID); // we get the current players position from player id
+    $currentPlayerOrderIncriesedOne = $currentPlayerOrder + 1; // we add one to the position and we get the id of the player that has position (players position + 1)
+    $nextPlayerID = -1;
+
+    $sql_query = "SELECT userid from gametoorder where (gameName = '$currentGameName') AND (playerorder = '$currentPlayerOrderIncriesedOne')";
+    $sql_query_result = mysqli_query($db, $sql_query);
+    $numberOfResults = mysqli_num_rows($sql_query_result); // We get the result of that query and if we have a result then the user wasn't the last one in the queue
+    if ($numberOfResults > 0) {
+        $sql_query_result_first_row = mysqli_fetch_assoc($sql_query_result);
+        $nextPlayerID = $sql_query_result_first_row['userid'];
+        if ($nextPlayerID > 0) {
+            return $nextPlayerID;
+        } else {
+            $nextPlayerID = getFirstPlayersID($currentGameName);
+        }
+
+    } else { // If we had no result that means that the player that just played was the last one
+        $nextPlayerID = getFirstPlayersID($currentGameName);
+    }
+    return $nextPlayerID;
+
+}
+
+function getFirstPlayersID($currentGameName): Int {
+    global $db;
+    $sql_query = "SELECT userid from gametoorder where playerorder = '1'";
+    $sql_query_result = mysqli_query($db, $sql_query);
+    $sql_query_result_first_row = mysqli_fetch_assoc($sql_query_result);
+    $firstPlayerUserID = $sql_query_result_first_row['userid']; //Now we have the order of the current player
+    return $firstPlayerUserID;
+}
+
+function getCurrentPlayersOrder($currentGameName, $currentPlayerID): Int {
+    global $db;
+    $sql_query = "SELECT playerorder from gametoorder where gameName = '$currentGameName' AND userid = '$currentPlayerID'";
+    $sql_query_result = mysqli_query($db, $sql_query);
+    $sql_query_result_first_row = mysqli_fetch_assoc($sql_query_result);
+    $curret_playerorder = $sql_query_result_first_row['playerorder']; //Now we have the order of the current player
+    return $curret_playerorder;
+
+}
 
 
 

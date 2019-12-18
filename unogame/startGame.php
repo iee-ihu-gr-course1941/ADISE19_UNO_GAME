@@ -66,6 +66,8 @@ while ($row = mysqli_fetch_assoc($result_getAllPlayers)) {
 
 // After every player gets a card, set the card that opens the from the deck
 $id_of_first_card_in_deck = array_shift($_cardIds_cashed);
+
+
 $sql_give_card_to_player = "INSERT INTO game_to_last_card (gamename, lastCardId) VALUES ('$currentGameName', '$id_of_first_card_in_deck')";
 if ($db->query($sql_give_card_to_player) === TRUE) {
        // echo "INSERT INTO game_to_last_card ('$id_of_card_to_give_to_player', '$_tmp_userid') Succeed<p>";

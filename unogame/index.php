@@ -20,6 +20,21 @@ if (isset($_GET['logout'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <link rel="stylesheet" type="text/css" href="gamecss.css">
+
+    <script>
+        $.extend(
+        {
+            redirectPost: function(location, argsKey, argVal)
+            {
+                var form = '';
+                form += "<input type='hidden' name='selectedCardIDPassed' value='"+argVal+"'>";
+                form += "<input type='hidden' name='colorForBalader' value='yellow'>";
+                $('<form action="' + location + '" method="POST">' + form + '</form>').appendTo($(document.body)).submit();
+            }
+        });
+
+    </script>
+
     <script>
 
         function showMessage(messageHTML) {
@@ -44,19 +59,25 @@ if (isset($_GET['logout'])) {
          */
         function didSelectImage(selectedCardID) {
 
+            //$.redirectPost("playCard.php", "selectedCardIDPassed", selectedCardID); Uncomment me to add redirection for playCard.php debug!
+
+
             $.ajax({
                 url: "playCard.php",
                 type: "POST",
-                data: {"selectedCardID": selectedCardID},
+                data: {"selectedCardIDPassed": selectedCardID, "colorForBalader":"yellow"},
                 success: function(data) {
                      console.log("data = " + data);
                     if (data.localeCompare("not_your_turn") == 0) {
                         alert("It's not your turn!! ");
                     } else if (data.localeCompare("you_cant_play_this_card") == 0) {
                         alert("You can't play this card!");
+                    } else {
+                        reloadUI();
                     }
                 }
             });
+
         }
 
 
