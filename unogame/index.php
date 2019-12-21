@@ -59,8 +59,7 @@ if (isset($_GET['logout'])) {
          */
         function didSelectImage(selectedCardID) {
 
-            var dubugMode = true; // This variable is so that we can test with the php echo the results on functions on playcard.php and globalfunctions
-
+            var dubugMode = false; // This variable is so that we can test with the php echo the results on functions on playcard.php and globalfunctions
             if (dubugMode == true) {
                 $.redirectPost("playCard.php", "selectedCardIDPassed", selectedCardID);
             } else {
@@ -102,6 +101,52 @@ if (isset($_GET['logout'])) {
 
 
           function didClickPass() {
+              var dubugMode = false; // This variable is so that we can test with the php echo the results on functions on playcard.php and globalfunctions
+              if (dubugMode == true) {
+                  $.redirectPost("didClickPass.php");
+              } else {
+                $.ajax({
+                    url: "didClickPass.php",
+                    type: "POST",
+                    data: {},
+                    success: function(data) {
+                         console.log("data = " + data);
+                        if (data.localeCompare("not_your_turn") == 0) {
+                            alert("It's not your turn!! ");
+                        } else if (data.localeCompare("you_must_pickACard_first") == 0) {
+                            alert("You must pick a card before you pass");
+                        } else {
+                            reloadUI();
+                        }
+                    }
+                });
+                }
+          }
+
+          function didClickPickACard() {
+            var dubugMode = false; // This variable is so that we can test with the php echo the results on functions on playcard.php and globalfunctions
+            if (dubugMode == true) {
+                $.redirectPost("pickACard.php");
+            } else {
+                $.ajax({
+                    url: "pickACard.php",
+                    type: "POST",
+                    data: {},
+                    success: function(data) {
+                         console.log("data = " + data);
+                        if (data.localeCompare("not_your_turn") == 0) {
+                            alert("It's not your turn!! ");
+                        } else if (data.localeCompare("you_cant_play_this_card") == 0) {
+                            alert("You can't play this card!");
+                        } else if (data.localeCompare("you_have_already_Picked_a_card") == 0) {
+                            alert("You have already picked a card");
+                        } else {
+                            reloadUI();
+                        }
+                    }
+                });
+            }
+
 
           }
 

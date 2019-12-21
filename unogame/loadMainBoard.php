@@ -14,7 +14,7 @@ $isGameStarted = $sql_result_sql_get_if_gameStarted_firstRow['started'];
 
 
 if ($isGameStarted == true) {
-    echo "<img width='120px' src='Assets/uno_placeholder.png' alt='Pick a card'>"; // The deck of cards
+    echo "<img width='120px' onclick='didClickPickACard()' src='Assets/uno_placeholder.png' alt='Pick a card'>"; // The deck of cards
 
     // Now we get the last played card to display it to the center
     $sql_get_lastPlayedCard = "SELECT lastCardId FROM game_to_last_card where gamename = '$currentGameName'";

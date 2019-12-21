@@ -47,6 +47,14 @@ while ($row = mysqli_fetch_assoc($result_getAllPlayers)) {
         echo "Error on sql_insert_player_into_order creating table: " . $db->error;
     }
 
+    $sql_insert_into_hasPickedACard = "INSERT INTO usertohaspickedacard (gameName, userid, hasPickedACard) VALUES ('$currentGameName', '$_tmp_userid', false)";
+    if ($db->query($sql_insert_into_hasPickedACard) === TRUE) {
+        echo " <p> <h1> INSERT INTO usertohaspickedacard Succeed </h1> <p>";
+    } else {
+        echo "Error on sql_insert_player_into_order creating table: " . $db->error;
+    }
+
+
     // for each player we get 7 cards as the uno rules say
 
     for ($_i = 0; $_i<7; $_i++) {

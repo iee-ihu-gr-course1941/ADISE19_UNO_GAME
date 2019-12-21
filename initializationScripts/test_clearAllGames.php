@@ -58,4 +58,11 @@
     }else {
     echo "baladerSelectedColor failed on clear<p>";
     }
+
+    $sql = "DELETE FROM userToHasPickedACard";
+    if ($db->query($sql) === TRUE) {
+    echo "userToHasPickedACard cleared successfully<p>";
+    }else {
+    echo "userToHasPickedACard failed on clear<p>";
+    }
 ?>

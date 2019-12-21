@@ -252,7 +252,29 @@ function removeCardFromPlayer($currentGameName, $currentUserID, $cardPlayedID) {
     }
 }
 
+function getIfUserHasPickedACard($currentUserID, $currentGameName):Bool {
+    global $db;
+    $sql_query = "SELECT hasPickedACard from usertohaspickedacard where gamename = '$currentGameName' AND userid = '$currentUserID'";
+    $sql_query_result = mysqli_query($db, $sql_query);
+    $sql_query_result_first_row = mysqli_fetch_assoc($sql_query_result);
+    $user_hasPickedACard = $sql_query_result_first_row['hasPickedACard'];
+    //echo "<p> <h2> User with id $currentUserID has picked a card value = '$user_hasPickedACard' </h2>";
+    if ($user_hasPickedACard == true) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
+function updateUserHasPickedACard($currentUserID, $currentGameName, $hasPickedACardValue) {
+    global $db;
+    $sql_query = "UPDATE usertohaspickedacard set hasPickedACard = '$hasPickedACardValue' where gamename = '$currentGameName' AND userid = '$currentUserID'";
+    if ($db->query($sql_query) === TRUE) {
+        echo "<p>UPDATE hasPickedACard Succeed";
+    } else {
+         console.log("<p>UPDATE hasPickedACard failed  ". $db->error);
+    }
+}
 
 
 
