@@ -47,11 +47,11 @@ while ($row = mysqli_fetch_assoc($result_getAllPlayers)) {
         echo "Error on sql_insert_player_into_order creating table: " . $db->error;
     }
 
-    // for each player we get 7 cards as the uno rulles say
+    // for each player we get 7 cards as the uno rules say
 
     for ($_i = 0; $_i<7; $_i++) {
         $id_of_card_to_give_to_player = array_shift($_cardIds_cashed);
-        $sql_give_card_to_player = "INSERT INTO useridcardassotiation (userid, cardid) VALUES ('$_tmp_userid', '$id_of_card_to_give_to_player')";
+        $sql_give_card_to_player = "INSERT INTO useridcardassotiation (gamename, userid, cardid) VALUES ('$currentGameName','$_tmp_userid', '$id_of_card_to_give_to_player')";
         if ($db->query($sql_give_card_to_player) === TRUE) {
                // echo "Insert ('$id_of_card_to_give_to_player', '$_tmp_userid') Succeed<p>";
         } else {

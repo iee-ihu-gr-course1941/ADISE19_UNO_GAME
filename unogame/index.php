@@ -59,24 +59,30 @@ if (isset($_GET['logout'])) {
          */
         function didSelectImage(selectedCardID) {
 
-            //$.redirectPost("playCard.php", "selectedCardIDPassed", selectedCardID); Uncomment me to add redirection for playCard.php debug!
+            var dubugMode = true; // This variable is so that we can test with the php echo the results on functions on playcard.php and globalfunctions
 
+            if (dubugMode == true) {
+                $.redirectPost("playCard.php", "selectedCardIDPassed", selectedCardID);
+            } else {
+                $.ajax({
+                                url: "playCard.php",
+                                type: "POST",
+                                data: {"selectedCardIDPassed": selectedCardID, "colorForBalader":"yellow"},
+                                success: function(data) {
+                                     console.log("data = " + data);
+                                    if (data.localeCompare("not_your_turn") == 0) {
+                                        alert("It's not your turn!! ");
+                                    } else if (data.localeCompare("you_cant_play_this_card") == 0) {
+                                        alert("You can't play this card!");
+                                    } else {
+                                        reloadUI();
+                                    }
+                                }
+                            });
+            }
 
-            $.ajax({
-                url: "playCard.php",
-                type: "POST",
-                data: {"selectedCardIDPassed": selectedCardID, "colorForBalader":"yellow"},
-                success: function(data) {
-                     console.log("data = " + data);
-                    if (data.localeCompare("not_your_turn") == 0) {
-                        alert("It's not your turn!! ");
-                    } else if (data.localeCompare("you_cant_play_this_card") == 0) {
-                        alert("You can't play this card!");
-                    } else {
-                        reloadUI();
-                    }
-                }
-            });
+            
+
 
         }
 

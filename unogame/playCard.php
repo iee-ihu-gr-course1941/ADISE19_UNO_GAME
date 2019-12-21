@@ -25,6 +25,7 @@ if ($isUserPlaying == false) { // Here we check if it's users order to play
         echo $you_cant_play_this_cardError;
     } else {
         applyCardEffects($currentGameName, $cardPlayedID, $currentUserID, $colorForBalader); // applyCardEffects is the function that will apply all the lose order - plus 2 - balader - switch order effects
+        removeCardFromPlayer($currentGameName, $currentUserID, $cardPlayedID);
         echo "ok card! :-)";
     }
 

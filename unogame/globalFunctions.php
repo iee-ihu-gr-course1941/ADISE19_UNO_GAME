@@ -48,7 +48,7 @@ function addCardsToPlayer($playerID, $numberOfCards) {
     echo "<h1> countForLoop = $countForLoop </h1>";
     for ($i = 0; $i<$countForLoop; $i++) {
         $id_of_card_to_give_to_player = array_shift($available_cards);
-        $sql_give_card_to_player = "INSERT INTO useridcardassotiation (userid, cardid) VALUES ('$playerID', '$id_of_card_to_give_to_player')";
+        $sql_give_card_to_player = "INSERT INTO useridcardassotiation (gamename, userid, cardid) VALUES ('$gameName','$playerID', '$id_of_card_to_give_to_player')";
         if ($db->query($sql_give_card_to_player) === TRUE) {
                echo "Test 123Insert ('$id_of_card_to_give_to_player', '$playerID') Succeed<p>";
         } else {
@@ -155,6 +155,7 @@ function updateBaladerSelectedColor($currentGameName, $color) {
 
 function applyCardEffects($currentGameName, $cardID, $currentPlayerID, $colorForBalader) {
     global $db;
+    echo "<p>applyCardEffects entered <p>";
     $sql_give_card_to_player = "UPDATE game_to_last_card SET lastCardId = '$cardID' where gamename = '$currentGameName'";
     if ($db->query($sql_give_card_to_player) === TRUE) {
            // echo "INSERT INTO game_to_last_card ('$id_of_card_to_give_to_player', '$_tmp_userid') Succeed<p>";
@@ -164,18 +165,26 @@ function applyCardEffects($currentGameName, $cardID, $currentPlayerID, $colorFor
     deleteFromGameToNotPlayedCards($currentGameName,$cardID);
 
     $card = getDetailsOfCard($cardID);
+    $nextPlayerID = getNextPlayerID($currentGameName, $currentPlayerID);
+
+    if (($card->value == "plus2") or ($card->value == "baladerAddFour")){
+            echo "debug: plus2 or baladerAddFour entered";
+            checkIfPlayerWillGetExtraCards($nextPlayerID, $cardID);
+    } else {
+        echo "<p>cardColor '$card->color' not plus 2 or baladerAddFour <p>";
+    }
+
     if (($card->color == "balader") or ($card->color == "baladerAddFour")){
         updateBaladerSelectedColor($currentGameName, $colorForBalader);
     } else if ($card->value == "loseOrder") {
        // Call function for loose order
+       $nextPlayerID = getNextPlayerID($currentGameName, $nextPlayerID); // Here we update 2 times that next player so that we apply the lose order effect!
     } else if ($card->value == "switchOrder") {
        // Call function for switch order
     }
-    $nextPlayerID = getNextPlayerID($currentGameName, $currentPlayerID);
+
     // Now we check if next player needs to get extra cards!
-    if (($card->color == "plus2") or ($card->color == "baladerAddFour")){
-        checkIfPlayerWillGetExtraCards($nextPlayerID, $cardID);
-    }
+
     updateWhoPlays($currentGameName, $nextPlayerID);
 }
 
@@ -231,7 +240,16 @@ function getCurrentPlayersOrder($currentGameName, $currentPlayerID): Int {
     $sql_query_result_first_row = mysqli_fetch_assoc($sql_query_result);
     $curret_playerorder = $sql_query_result_first_row['playerorder']; //Now we have the order of the current player
     return $curret_playerorder;
+}
 
+function removeCardFromPlayer($currentGameName, $currentUserID, $cardPlayedID) {
+    global $db;
+    $sql_query = "DELETE from useridcardassotiation where cardid = '$cardPlayedID' and gameName = '$currentGameName' AND userid = '$currentUserID'";
+    if ($db->query($sql_query) === TRUE) {
+        echo "<p>DELETE card Succeed";
+    } else {
+         console.log("<p>DELETE card Succeed failed  ". $db->error);
+    }
 }
 
 

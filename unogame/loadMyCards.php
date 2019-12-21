@@ -24,7 +24,7 @@ if ($isGameStarted == true) {
 
     // Now we get all the card ids from the table userid card assotiation
 
-    $sql_select_ordered_cards = "SELECT * FROM useridcardassotiation where userid = '$currentUserID' ORDER BY cardid";
+    $sql_select_ordered_cards = "SELECT * FROM useridcardassotiation where userid = '$currentUserID' and gamename = '$currentGameName' ORDER BY cardid";
     $result_select_ordered_cards = mysqli_query($db, $sql_select_ordered_cards);
     while ($row = mysqli_fetch_assoc($result_select_ordered_cards)) {
 

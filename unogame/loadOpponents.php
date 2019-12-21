@@ -56,7 +56,7 @@ if ($isGameStarted == false) {
 
 
                 // Now we get the number of cards that the user has
-                $sql_count_player_cards = "SELECT count(*) as total from useridcardassotiation where userid = '$userID'";
+                $sql_count_player_cards = "SELECT count(*) as total from useridcardassotiation where userid = '$userID' and gamename = '$currentGameName'";
                 $sql_count_player_cards_result = mysqli_query($db, $sql_count_player_cards);
                 $count_data = mysqli_fetch_assoc($sql_count_player_cards_result);
                 $number_of_cards = $count_data['total'];
