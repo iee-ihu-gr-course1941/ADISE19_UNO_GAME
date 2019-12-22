@@ -11,7 +11,7 @@ body {
 	width: 30%;
 	margin: 100px auto 0px;
 	color: white;
-	background: #001bc7;
+	background: #FF0000;
 	text-align: center;
 	border: 1px solid #B0C4DE;
 	border-bottom: none;
@@ -85,7 +85,7 @@ body {
 }
 
 .border {
-	border: 2px blue dashed;
+	border: 2px red dashed;
 }
 
 .mr-0 {

@@ -20,6 +20,8 @@ if (isset($_GET['logout'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <link rel="stylesheet" type="text/css" href="gamecss.css">
+    <link rel="stylesheet" type="text/css" href="popUp.css">
+
 
     <script>
         $.extend(
@@ -36,7 +38,7 @@ if (isset($_GET['logout'])) {
     </script>
 
     <script>
-
+        var selectedCardIDForColorCase;
         function showMessage(messageHTML) {
             $("#opponents").load("loadOpponents.php", {
 
@@ -58,29 +60,32 @@ if (isset($_GET['logout'])) {
          *  if it's not the current user he will get a not_your_turn data response and he will notified with an alert
          */
         function didSelectImage(selectedCardID) {
-
-            var dubugMode = false; // This variable is so that we can test with the php echo the results on functions on playcard.php and globalfunctions
-            if (dubugMode == true) {
-                $.redirectPost("playCard.php", "selectedCardIDPassed", selectedCardID);
+            if (selectedCardID > 100) {
+                selectedCardIDForColorCase = selectedCardID;
+                var modal = document.getElementById("myModal");
+                modal.style.display = "block";
             } else {
-                $.ajax({
-                                url: "playCard.php",
-                                type: "POST",
-                                data: {"selectedCardIDPassed": selectedCardID, "colorForBalader":"yellow"},
-                                success: function(data) {
-                                     console.log("data = " + data);
-                                    if (data.localeCompare("not_your_turn") == 0) {
-                                        alert("It's not your turn!! ");
-                                    } else if (data.localeCompare("you_cant_play_this_card") == 0) {
-                                        alert("You can't play this card!");
-                                    } else {
-                                        reloadUI();
-                                    }
+                var dubugMode = false; // This variable is so that we can test with the php echo the results on functions on playcard.php and globalfunctions
+                if (dubugMode == true) {
+                    $.redirectPost("playCard.php", "selectedCardIDPassed", selectedCardID);
+                } else {
+                    $.ajax({
+                            url: "playCard.php",
+                            type: "POST",
+                            data: {"selectedCardIDPassed": selectedCardID},
+                            success: function(data) {
+                                 console.log("data = " + data);
+                                if (data.localeCompare("not_your_turn") == 0) {
+                                    alert("It's not your turn!! ");
+                                } else if (data.localeCompare("you_cant_play_this_card") == 0) {
+                                    alert("You can't play this card!");
+                                } else {
+                                    reloadUI();
                                 }
-                            });
+                            }
+                        });
+                }
             }
-
-            
 
 
         }
@@ -121,6 +126,24 @@ if (isset($_GET['logout'])) {
                     }
                 });
                 }
+          }
+
+          function didPickColor(color) {
+             $.ajax({
+                 url: "playCard.php",
+                 type: "POST",
+                 data: {"selectedCardIDPassed": selectedCardIDForColorCase, "colorForBalader":color},
+                 success: function(data) {
+                      console.log("data = " + data);
+                     if (data.localeCompare("not_your_turn") == 0) {
+                         alert("It's not your turn!! ");
+                     } else if (data.localeCompare("you_cant_play_this_card") == 0) {
+                         alert("You can't play this card!");
+                     } else {
+                         reloadUI();
+                     }
+                 }
+             });
           }
 
           function didClickPickACard() {
@@ -247,7 +270,35 @@ if (isset($_GET['logout'])) {
 
 </div>
 
+<div id='myModal' class="modal">
 
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <button id='closeID' class='close'>x</button>
+      <h2>Pick a color</h2>
+    </div>
+    <div class="modal-body">
+      <img class='currentPlayingColorInBalader' style='background-color:#30911F' onclick='didPickColor("green")'>
+      <img class='currentPlayingColorInBalader' style='background-color:#ff0000' onclick='didPickColor("red")'>
+      <img class='currentPlayingColorInBalader' style='background-color:#89cff0' onclick='didPickColor("blue")'>
+      <img class='currentPlayingColorInBalader' style='background-color:#ffff00' onclick='didPickColor("yellow")'>
+    </div>
+    <div class="modal-footer">
+      <h3></h3>
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+    $('#closeID').click(function(){
+        var modal = document.getElementById("myModal");
+        modal.style.display = "none";
+    });
+
+</script>
 
 <div class="contentOpponents">
 
