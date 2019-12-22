@@ -4,7 +4,7 @@ include('../server.php');
 include('../Model/Card.php');
 
 function checkIfPlayerWillGetExtraCards($nextPlayerID, $cardThatJustPlayed) {
-    echo "checkIfPlayerWillGetExtraCards! :-)";
+  //  echo "checkIfPlayerWillGetExtraCards! :-)";
     global $db;
     $sql_to_get_card_details = "SELECT value from cards where cardid = '$cardThatJustPlayed'";
     $sql_result_to_get_card_details = mysqli_query($db, $sql_to_get_card_details);
@@ -12,15 +12,15 @@ function checkIfPlayerWillGetExtraCards($nextPlayerID, $cardThatJustPlayed) {
     $cardThatJustPlayedValue = $firstrow_sql_result_to_get_card_details['value'];
 
     // now we have the value of the card and we will check if he will get extra cards
-    echo "cardThatJustPlayedValue: '$cardThatJustPlayedValue'";
+  //  echo "cardThatJustPlayedValue: '$cardThatJustPlayedValue'";
     if (strcmp($cardThatJustPlayedValue,'plus2') == 0) {
         // We add 2 cards to the player
         addCardsToPlayer($nextPlayerID, 2);
-        echo "we add 2 cards to player, value = '$cardThatJustPlayedValue'";
+     //   echo "we add 2 cards to player, value = '$cardThatJustPlayedValue'";
     } else if (strcmp($cardThatJustPlayedValue,'baladerAddFour') == 0) {
         // We add 4 cards to the player
         addCardsToPlayer($nextPlayerID, 4);
-        echo "we add 4 cards to player, value = '$cardThatJustPlayedValue'";
+     //   echo "we add 4 cards to player, value = '$cardThatJustPlayedValue'";
     }
 }
 
@@ -37,7 +37,7 @@ function addCardsToPlayer($playerID, $numberOfCards) {
     while ($row = mysqli_fetch_assoc($sql_get_all_available_cards_result)) {
 
         $availableCardId = $row['availableCardId'];
-        echo "<h1> availableCardId $availableCardId </h1>";
+      //  echo "<h1> availableCardId $availableCardId </h1>";
         array_push($available_cards,$availableCardId);
     }
     // Now in $available_cards we have all availabel cards
@@ -45,14 +45,14 @@ function addCardsToPlayer($playerID, $numberOfCards) {
     // we suffle the array
 
     shuffle($available_cards);
-    echo "<h1> countForLoop = $countForLoop </h1>";
+   // echo "<h1> countForLoop = $countForLoop </h1>";
     for ($i = 0; $i<$countForLoop; $i++) {
         $id_of_card_to_give_to_player = array_shift($available_cards);
         $sql_give_card_to_player = "INSERT INTO useridcardassotiation (gamename, userid, cardid) VALUES ('$gameName','$playerID', '$id_of_card_to_give_to_player')";
         if ($db->query($sql_give_card_to_player) === TRUE) {
-               echo "Test 123Insert ('$id_of_card_to_give_to_player', '$playerID') Succeed<p>";
+            //   echo "Test 123Insert ('$id_of_card_to_give_to_player', '$playerID') Succeed<p>";
         } else {
-               echo "Error on id_of_card_to_give_to_player creating table: " . $db->error;
+             //  echo "Error on id_of_card_to_give_to_player creating table: " . $db->error;
         }
         deleteFromGameToNotPlayedCards($gameName, $id_of_card_to_give_to_player);
     }
@@ -61,13 +61,13 @@ function addCardsToPlayer($playerID, $numberOfCards) {
 
 function deleteFromGameToNotPlayedCards($_currentGameName,$_id_of_card_to_give_to_player) {
         global $db;
-        echo("deleteFromGameToNotPlayedCards: $_currentGameName - $_id_of_card_to_give_to_player");
+       // echo("deleteFromGameToNotPlayedCards: $_currentGameName - $_id_of_card_to_give_to_player");
         $removeFrom_playedCards_sql = "DELETE FROM game_to_not_played_cards WHERE gamename = '$_currentGameName' AND availableCardId = '$_id_of_card_to_give_to_player'";
         $random = mysqli_query($db, $removeFrom_playedCards_sql);
         if ($db->query($removeFrom_playedCards_sql) === TRUE) {
-                echo "Succeed DELETE FROM game_to_not_played_cards ('$_currentGameName', '$_id_of_card_to_give_to_player') Succeed<p>";
+              //  echo "Succeed DELETE FROM game_to_not_played_cards ('$_currentGameName', '$_id_of_card_to_give_to_player') Succeed<p>";
         } else {
-                echo "Error on game_to_not_played_cards creating table: " . $db->error;
+              //  echo "Error on game_to_not_played_cards creating table: " . $db->error;
         }
 }
 
@@ -103,10 +103,10 @@ function getIfCardIsValid($cardPlayedID, $gamename): Bool {
         // Now we can get the card details from getDetailsOfCard function
         $lasPlayedCardDetails = getDetailsOfCard($lastCardId);
 
-        echo "<p>lasPlayedCardDetails->value: '$lasPlayedCardDetails->value' <p>";
-        echo "cardThatJustPlayed->value: '$cardThatJustPlayed->value'<p>";
-        echo "lasPlayedCardDetails->color: '$lasPlayedCardDetails->color'<p>";
-        echo "cardThatJustPlayed->color: '$cardThatJustPlayed->color'<p>";
+      //  echo "<p>lasPlayedCardDetails->value: '$lasPlayedCardDetails->value' <p>";
+      //  echo "cardThatJustPlayed->value: '$cardThatJustPlayed->value'<p>";
+       // echo "lasPlayedCardDetails->color: '$lasPlayedCardDetails->color'<p>";
+        //echo "cardThatJustPlayed->color: '$cardThatJustPlayed->color'<p>";
 
         if (($lasPlayedCardDetails->value == $cardThatJustPlayed->value) or (($lasPlayedCardDetails->color == $cardThatJustPlayed->color))) {
             return true;
@@ -147,9 +147,9 @@ function updateBaladerSelectedColor($currentGameName, $color) {
     global $db;
     $sql_query = "UPDATE baladerselectedcolor set color = '$color' WHERE gamename = '$currentGameName'";
     if ($db->query($sql_query) === TRUE) {
-        echo "UPDATE baladerselectedcolor succeed new color: '$color'";
+        //echo "UPDATE baladerselectedcolor succeed new color: '$color'";
     } else {
-        echo "UPDATE baladerselectedcolor failed ". $db->error;
+      //  echo "UPDATE baladerselectedcolor failed ". $db->error;
     }
 }
 
@@ -160,7 +160,7 @@ function applyCardEffects($currentGameName, $cardID, $currentPlayerID, $colorFor
     if ($db->query($sql_give_card_to_player) === TRUE) {
            // echo "INSERT INTO game_to_last_card ('$id_of_card_to_give_to_player', '$_tmp_userid') Succeed<p>";
     } else {
-           echo "Error on UPDATE game_to_last_card ('$cardID'". $db->error;
+         //  echo "Error on UPDATE game_to_last_card ('$cardID'". $db->error;
     }
     deleteFromGameToNotPlayedCards($currentGameName,$cardID);
 
@@ -168,10 +168,10 @@ function applyCardEffects($currentGameName, $cardID, $currentPlayerID, $colorFor
     $nextPlayerID = getNextPlayerID($currentGameName, $currentPlayerID);
 
     if (($card->value == "plus2") or ($card->value == "baladerAddFour")){
-            echo "debug: plus2 or baladerAddFour entered";
+           // echo "debug: plus2 or baladerAddFour entered";
             checkIfPlayerWillGetExtraCards($nextPlayerID, $cardID);
     } else {
-        echo "<p>cardColor '$card->color' not plus 2 or baladerAddFour <p>";
+       // echo "<p>cardColor '$card->color' not plus 2 or baladerAddFour <p>";
     }
 
     if (($card->color == "balader") or ($card->color == "baladerAddFour")){
@@ -195,7 +195,7 @@ function switchOrder($currentGameName, $currentPlayerID): Int { // returns the n
         $tmpUserID = $row['userid'];
         $sql_query_update_positions = "UPDATE gametoorder set playerorder = '$count' WHERE gamename = '$currentGameName' AND userid = '$tmpUserID'";
         if ($db->query($sql_query_update_positions) === TRUE) {
-            echo "UPDATE gametoorder set playerorder = '<b>$count</b>' WHERE gamename = '<b>$currentGameName</b>' AND userid = '<b>$tmpUserID</b>' succeed";
+          //  echo "UPDATE gametoorder set playerorder = '<b>$count</b>' WHERE gamename = '<b>$currentGameName</b>' AND userid = '<b>$tmpUserID</b>' succeed";
         } else {
             console.log("UPDATE gametoorder set playerorder = '<b>$count</b>' WHERE gamename = '<b>$currentGameName</b>' AND userid = '<b>$tmpUserID</b>' falied". $db->error);
         }
@@ -211,7 +211,7 @@ function updateWhoPlays($currentGameName, $newPlayerID) {
     global $db;
     $sql_query = "UPDATE gametowhoplays set userid = '$newPlayerID' WHERE gamename = '$currentGameName'";
     if ($db->query($sql_query) === TRUE) {
-        echo "UPDATE gametowhoplays succeed new userid Players: '$newPlayerID'";
+       // echo "UPDATE gametowhoplays succeed new userid Players: '$newPlayerID'";
     } else {
             console.log("UPDATE gametowhoplays new userid failed  ". $db->error);
     }
@@ -265,7 +265,7 @@ function removeCardFromPlayer($currentGameName, $currentUserID, $cardPlayedID) {
     global $db;
     $sql_query = "DELETE from useridcardassotiation where cardid = '$cardPlayedID' and gameName = '$currentGameName' AND userid = '$currentUserID'";
     if ($db->query($sql_query) === TRUE) {
-        echo "<p>DELETE card Succeed";
+        //echo "<p>DELETE card Succeed";
     } else {
          console.log("<p>DELETE card Succeed failed  ". $db->error);
     }
@@ -289,13 +289,76 @@ function updateUserHasPickedACard($currentUserID, $currentGameName, $hasPickedAC
     global $db;
     $sql_query = "UPDATE usertohaspickedacard set hasPickedACard = '$hasPickedACardValue' where gamename = '$currentGameName' AND userid = '$currentUserID'";
     if ($db->query($sql_query) === TRUE) {
-        echo "<p>UPDATE hasPickedACard Succeed";
+        //echo "<p>UPDATE hasPickedACard Succeed";
     } else {
          console.log("<p>UPDATE hasPickedACard failed  ". $db->error);
     }
 }
 
+function checkIfCurrentUserWon($currentGameName, $currentUserID) {
+     global $db;
+    $sql_query = "SELECT COUNT(*) as countCards FROM useridcardassotiation WHERE gamename = '$currentGameName' and userid = '$currentUserID'";
+    $sql_query_result = mysqli_query($db, $sql_query);
+    $sql_query_result_first_row = mysqli_fetch_assoc($sql_query_result);
+    $countCards = $sql_query_result_first_row['countCards'];
+    if ($countCards == 0) {
+        // Game has finished winner $currentUserID
+        // first we update the game to finished
+        $sqlUpdate = "UPDATE games SET finished = true where gamename = '$currentGameName'";
+        if ($db->query($sqlUpdate) === TRUE) {
+           // echo "<p>UPDATE games to finished Succeed";
+        } else {
+             console.log("<p>UPDATE games to finished failed  ". $db->error);
+        }
+        // Now we insert to gametowinner the winner ID
+        $sqlInsertWinner = "INSERT INTO gametowinner (gameName, winnerID) VALUES ('$currentGameName','$currentUserID')";
+        if ($db->query($sqlInsertWinner) === TRUE) {
+            //echo "<p>Insert into gametowinner Succeed";
+        } else {
+             console.log("<p>UPDATE games to finished failed  ". $db->error);
+        }
+    }
+}
 
+function checkIfGameHasFinished($currentGameName):Bool {
+    global $db;
+    $sql_get_if_gameFinished = "SELECT * from games where gamename = '$currentGameName'";
+    $sqlResult_ID_sql_get_if_gameFinished = mysqli_query($db, $sql_get_if_gameFinished);
+    $sql_result_sql_get_if_gameFinished_firstRow = mysqli_fetch_assoc($sqlResult_ID_sql_get_if_gameFinished);
+    $isGameFinished = $sql_result_sql_get_if_gameFinished_firstRow['finished'];
+    if ($isGameFinished == false) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function echoPlayer($username, $playing = false, $numberOfCards = 0) {
+    $currentPlayerCardtype = "card";
+    if ($playing == true) {
+        $currentPlayerCardtype = "currentPlayerCard";
+    }
+    echo "<div class='parentsParent'>";
+    echo "<div class='aParent'>";
+    echo "<div class='$currentPlayerCardtype'>";
+    echo "<img src='Assets/user.png' alt='Avatar' class = 'profileImage'>";
+    echo "<div class='container'>";
+    echo "<h3><b>";
+    echo "$username";
+    echo "</b></h3>";
+    echo "<div class='testContainer'>";
+    echo "<div>";
+    echo "<img src='Assets/uno_placeholder.png' alt='Uno' class='unoImage'>";
+    echo "</div>";
+    echo "<div>";
+    echo "<h1>$numberOfCards</h1>";
+    echo "</div>";
+    echo "</div>";
+    echo "</div>";
+    echo "</div>";
+    echo "</div>";
+    echo "</div>";
+}
 
 
 

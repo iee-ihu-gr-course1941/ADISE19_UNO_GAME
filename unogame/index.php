@@ -38,6 +38,40 @@ if (isset($_GET['logout'])) {
     </script>
 
     <script>
+
+        function checkForErrors(data) {
+            if (data.localeCompare("not_your_turn") == 0) {
+                alert("It's not your turn!! ");
+            } else if (data.localeCompare("you_cant_play_this_card") == 0) {
+                alert("You can't play this card!");
+            } else if (data.localeCompare("you_must_pickACard_first") == 0) {
+              alert("You must pick a card before you pass");
+            } else if (data.localeCompare("you_have_already_Picked_a_card") == 0) {
+              alert("You have already picked a card");
+            } else  if (data.localeCompare("game_has_finished") == 0) {
+                 var modal = document.getElementById("winnerModal");
+                 modal.style.display = "block";
+                 //$.redirectPost("getWinnerDetails.php");
+                $("winnerBody").load("getWinnerDetails.php", {
+
+                 })
+
+                 $.ajax({
+                      url: "getWinnerDetails.php",
+                      type: "POST",
+                      data: {},
+                      success: function(data) {
+                            document.getElementById("winnerBody").innerHTML = data;
+                      }
+                  });
+
+            }
+        }
+
+    </script>
+
+
+    <script>
         var selectedCardIDForColorCase;
         function showMessage(messageHTML) {
             $("#opponents").load("loadOpponents.php", {
@@ -51,6 +85,18 @@ if (isset($_GET['logout'])) {
             $("#id_myCards_div").load("loadMyCards.php", {
 
             })
+
+            $.ajax({
+                 url: "checkIfGameFinished.php",
+                 type: "POST",
+                 data: {},
+                 success: function(data) {
+                      console.log("data = " + data);
+                      checkForErrors(data);
+                 }
+             });
+
+
         }
 
 
@@ -75,13 +121,8 @@ if (isset($_GET['logout'])) {
                             data: {"selectedCardIDPassed": selectedCardID},
                             success: function(data) {
                                  console.log("data = " + data);
-                                if (data.localeCompare("not_your_turn") == 0) {
-                                    alert("It's not your turn!! ");
-                                } else if (data.localeCompare("you_cant_play_this_card") == 0) {
-                                    alert("You can't play this card!");
-                                } else {
-                                    reloadUI();
-                                }
+                                 checkForErrors(data);
+                                 reloadUI();
                             }
                         });
                 }
@@ -116,13 +157,8 @@ if (isset($_GET['logout'])) {
                     data: {},
                     success: function(data) {
                          console.log("data = " + data);
-                        if (data.localeCompare("not_your_turn") == 0) {
-                            alert("It's not your turn!! ");
-                        } else if (data.localeCompare("you_must_pickACard_first") == 0) {
-                            alert("You must pick a card before you pass");
-                        } else {
-                            reloadUI();
-                        }
+                        checkForErrors(data);
+                        reloadUI();
                     }
                 });
                 }
@@ -135,13 +171,8 @@ if (isset($_GET['logout'])) {
                  data: {"selectedCardIDPassed": selectedCardIDForColorCase, "colorForBalader":color},
                  success: function(data) {
                       console.log("data = " + data);
-                     if (data.localeCompare("not_your_turn") == 0) {
-                         alert("It's not your turn!! ");
-                     } else if (data.localeCompare("you_cant_play_this_card") == 0) {
-                         alert("You can't play this card!");
-                     } else {
-                         reloadUI();
-                     }
+                      checkForErrors(data);
+                      reloadUI();
                  }
              });
           }
@@ -157,15 +188,8 @@ if (isset($_GET['logout'])) {
                     data: {},
                     success: function(data) {
                          console.log("data = " + data);
-                        if (data.localeCompare("not_your_turn") == 0) {
-                            alert("It's not your turn!! ");
-                        } else if (data.localeCompare("you_cant_play_this_card") == 0) {
-                            alert("You can't play this card!");
-                        } else if (data.localeCompare("you_have_already_Picked_a_card") == 0) {
-                            alert("You have already picked a card");
-                        } else {
-                            reloadUI();
-                        }
+                         checkForErrors(data);
+                         reloadUI();
                     }
                 });
             }
@@ -177,7 +201,7 @@ if (isset($_GET['logout'])) {
 
 
     $(document).ready(function(){
-    		var websocket = new WebSocket("ws://localhost:8090/ADISE19_UNO_GAME/unogame/php-socket.php");
+    		var websocket = new WebSocket("ws://localhost:8090/demo/php-socket.php");
     		websocket.onopen = function(event) {
     			showMessage("Connection is established!");
     		}
@@ -185,7 +209,6 @@ if (isset($_GET['logout'])) {
     		    updateSubtitleStatus()
     			var Data = JSON.parse(event.data);
     			showMessage("message="+Data.message_type+" "+Data.message+"");
-    			$('#chat-message').val('');
     		};
 
     		websocket.onerror = function(event){
@@ -271,7 +294,6 @@ if (isset($_GET['logout'])) {
 </div>
 
 <div id='myModal' class="modal">
-
   <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header">
@@ -285,17 +307,39 @@ if (isset($_GET['logout'])) {
       <img class='currentPlayingColorInBalader' style='background-color:#ffff00' onclick='didPickColor("yellow")'>
     </div>
     <div class="modal-footer">
-      <h3></h3>
+      <h3>      </h3>
     </div>
   </div>
-
 </div>
+
+
+<div id='winnerModal' class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <button id='winnerModalcloseID' class='close'>x</button>
+      <h2>Game finished!!!</h2>
+    </div>
+    <div class="modal-body">
+        <h1 id="winnerBody"></h1>
+    </div>
+    <div class="modal-footer">
+      <h3>Congratulatyions!!!!</h3>
+    </div>
+  </div>
+</div>
+
 
 <script>
 
     $('#closeID').click(function(){
         var modal = document.getElementById("myModal");
         modal.style.display = "none";
+    });
+
+    $('#winnerModalcloseID').click(function(){
+        var winnerModal = document.getElementById("winnerModal");
+        winnerModal.style.display = "none";
     });
 
 </script>

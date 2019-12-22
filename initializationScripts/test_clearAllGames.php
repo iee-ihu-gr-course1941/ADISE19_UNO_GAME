@@ -65,4 +65,11 @@
     }else {
     echo "userToHasPickedACard failed on clear<p>";
     }
+
+    $sql = "DELETE FROM gameToWinner";
+    if ($db->query($sql) === TRUE) {
+    echo "gameToWinner cleared successfully<p>";
+    }else {
+    echo "gameToWinner failed on clear<p>";
+    }
 ?>

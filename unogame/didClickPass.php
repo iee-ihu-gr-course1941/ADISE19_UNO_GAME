@@ -8,20 +8,25 @@ $you_must_pickACard_first = "you_must_pickACard_first";
 
 $currentUserID = $_SESSION['userID'];
 $currentGameName = $_SESSION['gamename'];
-
+$gameFinihsed = "game_has_finished";
 $isUserPlaying = checkIfUserIsPlaying($currentUserID, $currentGameName);
-if ($isUserPlaying == false) { // Here we check if it's users order to play
-    echo $not_your_turnError;
+
+$gameFinihsed = checkIfGameHasFinished($currentGameName);
+if ($gameFinihsed == true) {
+    echo $gameFinihsed;
 } else {
-    $hasPickedACard = getIfUserHasPickedACard($currentUserID, $currentGameName);
-    if ($hasPickedACard == true) {
-        // We just update the who plays
-        $nextPlayerID = getNextPlayerID($currentGameName, $currentUserID);
-        updateWhoPlays($currentGameName, $nextPlayerID);
-        updateUserHasPickedACard($currentUserID, $currentGameName, false);
+    if ($isUserPlaying == false) { // Here we check if it's users order to play
+        echo $not_your_turnError;
     } else {
-        echo $you_must_pickACard_first;
+        $hasPickedACard = getIfUserHasPickedACard($currentUserID, $currentGameName);
+        if ($hasPickedACard == true) {
+            // We just update the who plays
+            $nextPlayerID = getNextPlayerID($currentGameName, $currentUserID);
+            updateWhoPlays($currentGameName, $nextPlayerID);
+            updateUserHasPickedACard($currentUserID, $currentGameName, false);
+        } else {
+            echo $you_must_pickACard_first;
+        }
     }
 }
-
 ?>
