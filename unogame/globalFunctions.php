@@ -181,12 +181,31 @@ function applyCardEffects($currentGameName, $cardID, $currentPlayerID, $colorFor
        $nextPlayerID = getNextPlayerID($currentGameName, $nextPlayerID); // Here we update 2 times that next player so that we apply the lose order effect!
     } else if ($card->value == "switchOrder") {
        // Call function for switch order
+       $nextPlayerID = switchOrder($currentGameName, $currentPlayerID);
     }
-
-    // Now we check if next player needs to get extra cards!
-
     updateWhoPlays($currentGameName, $nextPlayerID);
 }
+
+function switchOrder($currentGameName, $currentPlayerID): Int { // returns the nextPlayerID
+    global $db;
+    $sql_query = "SELECT * from gametoorder where (gameName = '$currentGameName') order by playerorder desc";
+    $sql_query_result = mysqli_query($db, $sql_query);
+    $count = 1;
+    while ($row = mysqli_fetch_assoc($sql_query_result)) {
+        $tmpUserID = $row['userid'];
+        $sql_query_update_positions = "UPDATE gametoorder set playerorder = '$count' WHERE gamename = '$currentGameName' AND userid = '$tmpUserID'";
+        if ($db->query($sql_query_update_positions) === TRUE) {
+            echo "UPDATE gametoorder set playerorder = '<b>$count</b>' WHERE gamename = '<b>$currentGameName</b>' AND userid = '<b>$tmpUserID</b>' succeed";
+        } else {
+            console.log("UPDATE gametoorder set playerorder = '<b>$count</b>' WHERE gamename = '<b>$currentGameName</b>' AND userid = '<b>$tmpUserID</b>' falied". $db->error);
+        }
+        $count = $count + 1;
+    }
+    $nextPlayerID = getNextPlayerID($currentGameName, $currentPlayerID);
+    return $nextPlayerID;
+}
+
+
 
 function updateWhoPlays($currentGameName, $newPlayerID) {
     global $db;

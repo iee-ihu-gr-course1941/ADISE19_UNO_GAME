@@ -154,7 +154,7 @@ if (isset($_GET['logout'])) {
 
 
     $(document).ready(function(){
-    		var websocket = new WebSocket("ws://localhost:8090/demo/php-socket.php");
+    		var websocket = new WebSocket("ws://localhost:8090/ADISE19_UNO_GAME/unogame/php-socket.php");
     		websocket.onopen = function(event) {
     			showMessage("Connection is established!");
     		}
