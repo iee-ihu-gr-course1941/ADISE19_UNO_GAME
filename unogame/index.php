@@ -73,11 +73,80 @@ if (isset($_GET['logout'])) {
 
     <script>
         var selectedCardIDForColorCase;
+
+
+        function drawOpponent(name, numberOfCards, cardType) {
+          var parentDiv = document.createElement('div');
+          var aParent = document.createElement('div');
+          var cardTypeDiv = document.createElement('div');
+          var profileImage = document.createElement('img');
+          var h3 = document.createElement('h3');
+          var testContainerDiv = document.createElement('div');
+          var containerDiv = document.createElement('div');
+          var unoCardsImage = document.createElement('img');
+          var unoPlaceHolderDiv = document.createElement('div');
+          var h1 = document.createElement('h1');
+          var numberOfCardsDiv = document.createElement('div');
+
+
+            parentDiv.className  = 'parentsParent';
+            aParent.className  = 'aParent';
+            cardTypeDiv.className  = cardType;
+            profileImage.src = "Assets/user.png";
+            profileImage.className  = 'profileImage';
+            h3.innerHTML = name;
+            containerDiv.className = 'container';
+
+            unoCardsImage.src = "Assets/uno_placeholder.png";
+            unoCardsImage.className  = 'unoImage';
+
+
+
+            testContainerDiv.className  = 'testContainer';
+            h1.innerHTML = numberOfCards;
+            numberOfCardsDiv.appendChild(h1);
+            unoPlaceHolderDiv.appendChild(profileImage);
+
+            testContainerDiv.appendChild(unoPlaceHolderDiv);
+            testContainerDiv.appendChild(unoCardsImage);
+            containerDiv.appendChild(testContainerDiv);
+            containerDiv.appendChild(numberOfCardsDiv);
+
+             cardTypeDiv.appendChild(profileImage);
+             cardTypeDiv.appendChild(h3);
+             cardTypeDiv.appendChild(containerDiv);
+             aParent.appendChild(cardTypeDiv);
+             parentDiv.appendChild(aParent);
+             document.getElementById("opponents").appendChild(parentDiv);
+        }
+
+
+        function loadOpponents() {
+            $.ajax({
+                  url: "loadOpponents.php",
+                  type: "POST",
+                  data: {},
+                  success: function(data) {
+                     var parsedJSON = JSON.parse(data); // data is the json from loadOpponents.php
+                      document.getElementById("opponents").innerHTML = ""; // we clear the div with id opponents so that we do not redraw the same opponents
+                     for (var key in parsedJSON) {
+                          var name = parsedJSON[key]["name"]; // for each opponent we map the data and we pass the to the drawOpponent so that the items can be drawn in the opponent div
+                          var numberOfCards = parsedJSON[key]["number_of_cards"];
+                          var isPlaying = parsedJSON[key]["isPlaying"];
+
+                          var cardType = 'card';
+                          if (isPlaying == true) {
+                            cardType = "currentPlayerCard";
+                          }
+                          drawOpponent(name, numberOfCards,cardType);
+                       }
+                  }
+              });
+        }
+
+
         function showMessage(messageHTML) {
-            $("#opponents").load("loadOpponents.php", {
-
-            })
-
+            loadOpponents();
             $("#main_board_div").load("loadMainBoard.php", {
 
             })
@@ -233,9 +302,7 @@ if (isset($_GET['logout'])) {
 
     <script>
         $(document).ready(function () {
-            $("#opponents").load("loadOpponents.php", {
-
-            })
+                loadOpponents();
         })
     </script>
 

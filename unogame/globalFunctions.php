@@ -339,24 +339,24 @@ function echoPlayer($username, $playing = false, $numberOfCards = 0) {
         $currentPlayerCardtype = "currentPlayerCard";
     }
     echo "<div class='parentsParent'>";
-    echo "<div class='aParent'>";
-    echo "<div class='$currentPlayerCardtype'>";
-    echo "<img src='Assets/user.png' alt='Avatar' class = 'profileImage'>";
-    echo "<div class='container'>";
-    echo "<h3><b>";
-    echo "$username";
-    echo "</b></h3>";
-    echo "<div class='testContainer'>";
-    echo "<div>";
-    echo "<img src='Assets/uno_placeholder.png' alt='Uno' class='unoImage'>";
-    echo "</div>";
-    echo "<div>";
-    echo "<h1>$numberOfCards</h1>";
-    echo "</div>";
-    echo "</div>";
-    echo "</div>";
-    echo "</div>";
-    echo "</div>";
+        echo "<div class='aParent'>";
+            echo "<div class='$currentPlayerCardtype'>";
+                echo "<img src='Assets/user.png' alt='Avatar' class = 'profileImage'>";
+                echo "<div class='container'>";
+                    echo "<h3><b>";
+                    echo "$username";
+                    echo "</b></h3>";
+                    echo "<div class='testContainer'>";
+                        echo "<div>";
+                            echo "<img src='Assets/uno_placeholder.png' alt='Uno' class='unoImage'>";
+                        echo "</div>";
+                        echo "<div>";
+                            echo "<h1>$numberOfCards</h1>";
+                        echo "</div>";
+                    echo "</div>";
+                echo "</div>";
+            echo "</div>";
+        echo "</div>";
     echo "</div>";
 }
 
