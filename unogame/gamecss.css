@@ -1,4 +1,12 @@
-
+html {
+    height: 100%;
+}
+body {
+    width: 100%;
+    background: linear-gradient(to left, #2c3e50, #3498db);
+    padding-left: 20px;
+    padding-top: 20px;
+}
 
 .card {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -7,8 +15,12 @@
     height: 200px;
     text-align: center;
     margin: 20px auto 0px;
+    background: lightgray;
+    border-radius: 8%;
 }
-
+.numberOfCards_h1 {
+    padding-left: 10px;
+}
 
 .currentPlayerCard {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -17,7 +29,11 @@
     height: 200px;
     text-align: center;
     margin: 20px auto 0px;
-    background: #3c763d;
+    background: #005C97;
+    border-style: solid;
+    border-width: 5px;
+    border-color: yellow;
+    border-radius: 8%;
 }
 
 .currentPlayingColorInBalader {
@@ -57,6 +73,13 @@
     top: -20px;
 }
 
+oppositCurrentCardImage:hover {
+    transform: scale(1.2);
+    box-shadow: 0 8px 16px 0 rgba(1,1,1,1);
+    position: relative;
+    top: 20px;
+}
+
 .currentPlayerCard:hover {
     box-shadow: 0 8px 16px 0 rgba(1,1,1,1);
 }
@@ -78,10 +101,19 @@
 
 .profileImage {
     width: 50%;
+    padding-top: 2px;
 }
 
 .currentCardImage {
     width: 120px;
+    border-radius: 12%;
+    margin: 3px;
+}
+
+.oppositCurrentCardImage {
+    width: 120px;
+    border-radius: 12%;
+    margin: 3px;
 }
 
 .unoImage {
@@ -93,7 +125,7 @@
     text-align: center;
     margin: 0px auto;
     padding: 20px;
-    background: white;
+    background: transparent;
     border-radius: 0px 0px 10px 10px;
 }
 
@@ -103,8 +135,26 @@
     padding-bottom: 50px;
     padding-left: 150px;
     padding-top: 0px;
-    background: white;
+    background: transparent;
     border-radius: 0px 0px 10px 10px;
+}
+
+.btn-grad {
+    background-image: linear-gradient(to right, #e52d27 0%, #b31217 51%, #e52d27 100%);
+    width: 100px;
+    height: 50px;
+    color: white;
+    font-size: large;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-family: Arial-bLAVCK;
+
+}
+.btn-grad:hover {
+    background-position: right center;
+    transform: scale(1.2);
+    box-shadow: 0 8px 16px 0 rgba(1,1,1,1);
+    position: relative;
 }
 
 

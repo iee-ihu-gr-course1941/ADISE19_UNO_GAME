@@ -11,6 +11,9 @@ $sqlResult_ID_sql_get_if_gameStarted = mysqli_query($db, $sql_get_if_gameStarted
 $sql_result_sql_get_if_gameStarted_firstRow = mysqli_fetch_assoc($sqlResult_ID_sql_get_if_gameStarted);
 $isGameStarted = $sql_result_sql_get_if_gameStarted_firstRow['started']; // With this check we make sure that when admin reloads the page he will not see the start button again
 
+
+$usersJSONABLEArray = new ArrayObject();
+
 if ($isGameStarted == false) {
     $sql = "SELECT * FROM gametousersconnection where gameName = '$currentGameName'";
     $result = mysqli_query($db, $sql);
@@ -21,8 +24,10 @@ if ($isGameStarted == false) {
         $newResult = mysqli_query($db, $sql);
         $firstrow = mysqli_fetch_assoc($newResult);
         $username = $firstrow['username'];
-        echoPlayer($username,false,0);
+        $usersJSONABLEArray->append(array('name'=>$username,'number_of_cards'=>0, 'isPlaying'=>false));
+        //echoPlayer($username,false,0);
     }
+    echo json_encode($usersJSONABLEArray);
 } else {
 
     // here is the case that the game has started so we select the users form the gametoorder
@@ -58,14 +63,13 @@ if ($isGameStarted == false) {
                 $count_data = mysqli_fetch_assoc($sql_count_player_cards_result);
                 $number_of_cards = $count_data['total'];
 
-
-                echoPlayer($username, $isThisUsersOrder, $number_of_cards);
-
+                $usersJSONABLEArray->append(array('name'=>$username,'number_of_cards'=>$number_of_cards, 'isPlaying'=>$isThisUsersOrder));
+                //echoPlayer($username, $isThisUsersOrder, $number_of_cards);
             }
-
-
     }
+    echo json_encode($usersJSONABLEArray);
 }
+
 
 ?>
 

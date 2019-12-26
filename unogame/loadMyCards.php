@@ -11,7 +11,7 @@ $sql_get_if_gameStarted = "SELECT * from games where gamename = '$currentGameNam
 $sqlResult_ID_sql_get_if_gameStarted = mysqli_query($db, $sql_get_if_gameStarted);
 $sql_result_sql_get_if_gameStarted_firstRow = mysqli_fetch_assoc($sqlResult_ID_sql_get_if_gameStarted);
 $isGameStarted = $sql_result_sql_get_if_gameStarted_firstRow['started'];
-
+$usersJSONABLEArray = new ArrayObject();
 if ($isGameStarted == true) {
 
     // First we get the user id from users
@@ -24,7 +24,7 @@ if ($isGameStarted == true) {
 
     // Now we get all the card ids from the table userid card assotiation
 
-    $sql_select_ordered_cards = "SELECT * FROM useridcardassotiation where userid = '$currentUserID' and gamename = '$currentGameName' ORDER BY cardid";
+    $sql_select_ordered_cards = "SELECT * FROM useridcardassotiation where userid = '$currentUserID' and gamename = '$currentGameName'";
     $result_select_ordered_cards = mysqli_query($db, $sql_select_ordered_cards);
     while ($row = mysqli_fetch_assoc($result_select_ordered_cards)) {
 
@@ -38,10 +38,11 @@ if ($isGameStarted == true) {
          $tmpCardValue = $sql_result_getCardProperties_firstRow['value'];
          $tmpCardColor = $sql_result_getCardProperties_firstRow['color'];
 
-         $cardResourceURL = "Assets/cards/".$tmpCardValue."_".$tmpCardColor.".gif";
-         echo "<img class='currentCardImage' onclick='didSelectImage($tmp_cardID)' width='120px' src='$cardResourceURL' alt='last played card'>";
+         $cardResourceURL = "Assets/cards/".$tmpCardValue."_".$tmpCardColor.".png";
+         $usersJSONABLEArray->append(array('imageSourceURL'=>$cardResourceURL,'cardid'=>$tmp_cardID));
+         //echo "<img class='currentCardImage' onclick='didSelectImage($tmp_cardID)' width='120px' src='$cardResourceURL' alt='last played card'>";
     }
-
+echo json_encode($usersJSONABLEArray);
 
 
 

@@ -73,18 +73,170 @@ if (isset($_GET['logout'])) {
 
     <script>
         var selectedCardIDForColorCase;
+
+
+        function drawOpponent(name, numberOfCards, cardType) {
+          var parentDiv = document.createElement('div');
+          var aParent = document.createElement('div');
+          var cardTypeDiv = document.createElement('div');
+          var profileImage = document.createElement('img');
+          var h3 = document.createElement('h3');
+          var testContainerDiv = document.createElement('div');
+          var containerDiv = document.createElement('div');
+          var unoCardsImage = document.createElement('img');
+          var unoPlaceHolderDiv = document.createElement('div');
+          var h1 = document.createElement('h1');
+          h1.className = 'numberOfCards_h1';
+          var numberOfCardsDiv = document.createElement('div');
+
+
+            parentDiv.className  = 'parentsParent';
+            aParent.className  = 'aParent';
+            cardTypeDiv.className  = cardType;
+            profileImage.src = "Assets/user.png";
+            profileImage.className  = 'profileImage';
+            h3.innerHTML = name;
+            containerDiv.className = 'container';
+
+            unoCardsImage.src = "Assets/uno_placeholder.png";
+            unoCardsImage.className  = 'unoImage';
+
+
+
+            testContainerDiv.className  = 'testContainer';
+            h1.innerHTML = numberOfCards;
+            numberOfCardsDiv.appendChild(h1);
+            unoPlaceHolderDiv.appendChild(profileImage);
+
+            testContainerDiv.appendChild(unoPlaceHolderDiv);
+            testContainerDiv.appendChild(unoCardsImage);
+            containerDiv.appendChild(testContainerDiv);
+            containerDiv.appendChild(numberOfCardsDiv);
+
+             cardTypeDiv.appendChild(profileImage);
+             cardTypeDiv.appendChild(h3);
+             cardTypeDiv.appendChild(containerDiv);
+             aParent.appendChild(cardTypeDiv);
+             parentDiv.appendChild(aParent);
+             document.getElementById("opponents").appendChild(parentDiv);
+        }
+
+
+        function loadOpponents() {
+            $.ajax({
+                  url: "loadOpponents.php",
+                  type: "POST",
+                  data: {},
+                  success: function(data) {
+                     var parsedJSON = JSON.parse(data); // data is the json from loadOpponents.php
+                      document.getElementById("opponents").innerHTML = ""; // we clear the div with id opponents so that we do not redraw the same opponents
+                     for (var key in parsedJSON) {
+                          var name = parsedJSON[key]["name"]; // for each opponent we map the data and we pass the to the drawOpponent so that the items can be drawn in the opponent div
+                          var numberOfCards = parsedJSON[key]["number_of_cards"];
+                          var isPlaying = parsedJSON[key]["isPlaying"];
+
+                          var cardType = 'card';
+                          if (isPlaying == true) {
+                            cardType = "currentPlayerCard";
+                          }
+                          drawOpponent(name, numberOfCards,cardType);
+                       }
+                  }
+              });
+        }
+
+
+        function loadMainBoard() {
+             $.ajax({
+                  url: "loadMainBoard.php",
+                  type: "POST",
+                  data: {},
+                  success: function(data) {
+                    document.getElementById("main_board_div").innerHTML = "";
+                     var parsedJSON = JSON.parse(data); // data is the json from loadOpponents.php
+                     var gameStarted = parsedJSON["isGameStarted"];
+                     if (gameStarted == true) {
+                        var cardSourceUL = parsedJSON["cardSourceUL"];
+                        var wasLastCardBalader = parsedJSON["wasLastCardBalader"];
+
+                        //<img width='120px' onclick='didClickPickACard()' src='Assets/uno_placeholder.png' alt='Pick a card'>
+                        var pickACardImage = document.createElement('img');
+                        pickACardImage.src = 'Assets/uno_placeholder.png';
+                        pickACardImage.width = '120px';
+                        pickACardImage.onclick = function() {
+                                                    didClickPickACard();
+                                                };
+                        pickACardImage.alt = 'Pick a card';
+                        pickACardImage.className = 'currentCardImage';
+                        document.getElementById("main_board_div").appendChild(pickACardImage);
+                        var lastCardPlayed = document.createElement('img');
+                        lastCardPlayed.src = cardSourceUL;
+                        lastCardPlayed.width = '120px';
+                        lastCardPlayed.alt = 'Pick a card';
+                        lastCardPlayed.className = 'oppositCurrentCardImage';
+                        document.getElementById("main_board_div").appendChild(lastCardPlayed);
+                        if (wasLastCardBalader == true) {
+                            var baladerColor = parsedJSON["baladerColor"];
+                             var baladerColorImage = document.createElement('img');
+                             var str = 'background-color:';
+                            baladerColorImage.style = str.concat(baladerColor);
+                            baladerColorImage.className = 'currentPlayingColorInBalader';
+                            document.getElementById("main_board_div").appendChild(baladerColorImage);
+                        }
+
+
+                        var passDiv = document.createElement('div');
+
+                        var passButton = document.createElement('button');
+                        passButton.onclick = function() {
+                                                 didClickPass();
+                                             };
+                        passButton.innerHTML = 'PASS';
+                        passButton.className = 'btn-grad';
+                        passDiv.appendChild(passButton)
+                        document.getElementById("main_board_div").appendChild(passDiv);
+                     }
+
+                  }
+          });
+
+
+        }
+
+
+        function loadBoardCards() {
+            $.ajax({
+                  url: "loadMyCards.php",
+                  type: "POST",
+                  data: {},
+                  success: function(data) {
+                     var parsedJSON = JSON.parse(data); // data is the json from loadOpponents.php
+                      document.getElementById("id_myCards_div").innerHTML = ""; // we clear the div with id opponents so that we do not redraw the same opponents
+                     for (var key in parsedJSON) {
+    //<img class='currentCardImage' onclick='didSelectImage($tmp_cardID)' width='120px' src='$cardResourceURL' alt='last played card'>
+                        var id = parsedJSON[key]["cardid"];
+                        var imageSRC = parsedJSON[key]["imageSourceURL"];
+                        var imageToPlay = document.createElement('img');
+                        imageToPlay.className = 'currentCardImage';
+                        imageToPlay.src = imageSRC;
+                        imageToPlay.onclick = function() {
+                                              didSelectImage(id);
+                                          };
+                        imageToPlay.width = '120px';
+                        document.getElementById("id_myCards_div").appendChild(imageToPlay);
+                       }
+                  }
+              });
+
+
+        }
+
+
+
         function showMessage(messageHTML) {
-            $("#opponents").load("loadOpponents.php", {
-
-            })
-
-            $("#main_board_div").load("loadMainBoard.php", {
-
-            })
-
-            $("#id_myCards_div").load("loadMyCards.php", {
-
-            })
+            loadOpponents();
+            loadMainBoard();
+            loadBoardCards();
 
             $.ajax({
                  url: "checkIfGameFinished.php",
@@ -233,9 +385,7 @@ if (isset($_GET['logout'])) {
 
     <script>
         $(document).ready(function () {
-            $("#opponents").load("loadOpponents.php", {
-
-            })
+                loadOpponents();
         })
     </script>
 
@@ -272,23 +422,8 @@ if (isset($_GET['logout'])) {
 </head>
 <body>
 <div class="header">
-    <h2>UNO</h2>
     <h4 id="id_subtitle">waiting for host... </h4>
-
-
-    <div id="exit">
-        <form>
-
-
-        </form>
-
-    </div>
-
     <div id="startButton">
-
-
-
-
     </div>
 
 </div>
