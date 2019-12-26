@@ -12,6 +12,6 @@
 
 
     if ($isAdmin == true && $isGameStarted == false) {
-        echo "<button id='buttonStart' onclick='buttonStartDidClick()'> Start </button>";
+        echo "<button id='buttonStart' onclick='buttonStartDidClick()' class ='btn-grad'> Start </button>";
     }
 ?>

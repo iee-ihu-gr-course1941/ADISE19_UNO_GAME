@@ -1,4 +1,14 @@
 <?php
+
+class ObjectToReturn {
+
+    public $isGameStarted = false;
+    public $cardSourceUL = "";
+    public $wasLastCardBalader = false;
+    public $baladerColor = "";
+}
+
+
 include('../server.php');
 include('./globalFunctions.php');
 
@@ -12,9 +22,12 @@ $sqlResult_ID_sql_get_if_gameStarted = mysqli_query($db, $sql_get_if_gameStarted
 $sql_result_sql_get_if_gameStarted_firstRow = mysqli_fetch_assoc($sqlResult_ID_sql_get_if_gameStarted);
 $isGameStarted = $sql_result_sql_get_if_gameStarted_firstRow['started'];
 
+$jsonToReturn = new ObjectToReturn();
 
 if ($isGameStarted == true) {
-    echo "<img width='120px' onclick='didClickPickACard()' src='Assets/uno_placeholder.png' alt='Pick a card'>"; // The deck of cards
+
+    $jsonToReturn->isGameStarted = true;
+    //echo "<img width='120px' onclick='didClickPickACard()' src='Assets/uno_placeholder.png' alt='Pick a card'>"; // The deck of cards
 
     // Now we get the last played card to display it to the center
     $sql_get_lastPlayedCard = "SELECT lastCardId FROM game_to_last_card where gamename = '$currentGameName'";
@@ -32,40 +45,47 @@ if ($isGameStarted == true) {
     $lastCardValue = $sql_result_get_cardID_data_fromCards_firstRow['value'];
     $lastCardColor = $sql_result_get_cardID_data_fromCards_firstRow['color'];
     // now on Assets -> cards folder we added the cards with name  value_color.gif
-    $cardResourceURL = "Assets/cards/".$lastCardValue."_".$lastCardColor.".gif";
-    echo "<img class='currentCardImage' width='120px' src='$cardResourceURL' alt='last played card'>";
+    $cardResourceURL = "Assets/cards/".$lastCardValue."_".$lastCardColor.".png";
+    $jsonToReturn->cardSourceUL = $cardResourceURL;
+    //echo "<img class='currentCardImage' width='120px' src='$cardResourceURL' alt='last played card'>";
 
     // now we check if the last played card is balader so that we show the selected color in the board
     if (($lastCardValue == "balader") or ($lastCardValue == "baladerAddFour")) {
+        $jsonToReturn->wasLastCardBalader = true;
         $sql_query = "SELECT color from baladerselectedcolor where gamename = '$currentGameName'";
         $sql_query_result = mysqli_query($db, $sql_query);
         $sql_query_result_first_row = mysqli_fetch_assoc($sql_query_result);
         $color = $sql_query_result_first_row['color'];
 
-        echo "<img class='currentPlayingColorInBalader' style='background-color:";
+        //echo "<img class='currentPlayingColorInBalader' style='background-color:";
         switch ($color) {
             case "green":
-                echo "#30911F'";
+                //echo "#30911F'";
+                $jsonToReturn->baladerColor = "#30911F";
                 break;
             case "red":
-                echo "#ff0000'";
+                //echo "#ff0000'";
+                $jsonToReturn->baladerColor = "#ff0000";
                 break;
             case "blue":
-                echo "#89cff0'";
+                //echo "#89cff0'";
+                $jsonToReturn->baladerColor = "#89cff0";
                 break;
            case "yellow":
-                echo "#ffff00'";
+                //echo "#ffff00'";
+                $jsonToReturn->baladerColor = "#ffff00";
                 break;
             case "":
-                echo "' hidden = true";
+               // echo "' hidden = true";
                 break;
         }
-       echo ">";
+       //echo ">";
     }
 
 
-    echo "<button onClick='didClickPass()'>Pass</button>";
+    //echo "<button onClick='didClickPass()'>Pass</button>";
 }
+echo json_encode($jsonToReturn)
 
 
 ?>

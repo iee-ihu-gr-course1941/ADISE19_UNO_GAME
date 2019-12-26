@@ -86,6 +86,7 @@ if (isset($_GET['logout'])) {
           var unoCardsImage = document.createElement('img');
           var unoPlaceHolderDiv = document.createElement('div');
           var h1 = document.createElement('h1');
+          h1.className = 'numberOfCards_h1';
           var numberOfCardsDiv = document.createElement('div');
 
 
@@ -145,11 +146,67 @@ if (isset($_GET['logout'])) {
         }
 
 
+        function loadMainBoard() {
+             $.ajax({
+                  url: "loadMainBoard.php",
+                  type: "POST",
+                  data: {},
+                  success: function(data) {
+                    document.getElementById("main_board_div").innerHTML = "";
+                     var parsedJSON = JSON.parse(data); // data is the json from loadOpponents.php
+                     var gameStarted = parsedJSON["isGameStarted"];
+                     if (gameStarted == true) {
+                        var cardSourceUL = parsedJSON["cardSourceUL"];
+                        var wasLastCardBalader = parsedJSON["wasLastCardBalader"];
+
+                        //<img width='120px' onclick='didClickPickACard()' src='Assets/uno_placeholder.png' alt='Pick a card'>
+                        var pickACardImage = document.createElement('img');
+                        pickACardImage.src = 'Assets/uno_placeholder.png';
+                        pickACardImage.width = '120px';
+                        pickACardImage.onclick = function() {
+                                                    didClickPickACard();
+                                                };
+                        pickACardImage.alt = 'Pick a card';
+                        pickACardImage.className = 'currentCardImage';
+                        document.getElementById("main_board_div").appendChild(pickACardImage);
+                        var lastCardPlayed = document.createElement('img');
+                        lastCardPlayed.src = cardSourceUL;
+                        lastCardPlayed.width = '120px';
+                        lastCardPlayed.alt = 'Pick a card';
+                        lastCardPlayed.className = 'oppositCurrentCardImage';
+                        document.getElementById("main_board_div").appendChild(lastCardPlayed);
+                        if (wasLastCardBalader == true) {
+                            var baladerColor = parsedJSON["baladerColor"];
+                             var baladerColorImage = document.createElement('img');
+                             var str = 'background-color:';
+                            baladerColorImage.style = str.concat(baladerColor);
+                            baladerColorImage.className = 'currentPlayingColorInBalader';
+                            document.getElementById("main_board_div").appendChild(baladerColorImage);
+                        }
+
+
+                        var passDiv = document.createElement('div');
+
+                        var passButton = document.createElement('button');
+                        passButton.onclick = function() {
+                                                 didClickPass();
+                                             };
+                        passButton.innerHTML = 'PASS';
+                        passButton.className = 'btn-grad';
+                        passDiv.appendChild(passButton)
+                        document.getElementById("main_board_div").appendChild(passDiv);
+                     }
+
+                  }
+          });
+
+
+        }
+
+
         function showMessage(messageHTML) {
             loadOpponents();
-            $("#main_board_div").load("loadMainBoard.php", {
-
-            })
+            loadMainBoard();
 
             $("#id_myCards_div").load("loadMyCards.php", {
 
@@ -339,23 +396,8 @@ if (isset($_GET['logout'])) {
 </head>
 <body>
 <div class="header">
-    <h2>UNO</h2>
     <h4 id="id_subtitle">waiting for host... </h4>
-
-
-    <div id="exit">
-        <form>
-
-
-        </form>
-
-    </div>
-
     <div id="startButton">
-
-
-
-
     </div>
 
 </div>
