@@ -11,7 +11,7 @@ $sql_get_if_gameStarted = "SELECT * from games where gamename = '$currentGameNam
 $sqlResult_ID_sql_get_if_gameStarted = mysqli_query($db, $sql_get_if_gameStarted);
 $sql_result_sql_get_if_gameStarted_firstRow = mysqli_fetch_assoc($sqlResult_ID_sql_get_if_gameStarted);
 $isGameStarted = $sql_result_sql_get_if_gameStarted_firstRow['started'];
-
+$usersJSONABLEArray = new ArrayObject();
 if ($isGameStarted == true) {
 
     // First we get the user id from users
@@ -39,9 +39,10 @@ if ($isGameStarted == true) {
          $tmpCardColor = $sql_result_getCardProperties_firstRow['color'];
 
          $cardResourceURL = "Assets/cards/".$tmpCardValue."_".$tmpCardColor.".png";
-         echo "<img class='currentCardImage' onclick='didSelectImage($tmp_cardID)' width='120px' src='$cardResourceURL' alt='last played card'>";
+         $usersJSONABLEArray->append(array('imageSourceURL'=>$cardResourceURL,'cardid'=>$tmp_cardID));
+         //echo "<img class='currentCardImage' onclick='didSelectImage($tmp_cardID)' width='120px' src='$cardResourceURL' alt='last played card'>";
     }
-
+echo json_encode($usersJSONABLEArray);
 
 
 

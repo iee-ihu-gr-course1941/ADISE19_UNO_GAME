@@ -204,13 +204,39 @@ if (isset($_GET['logout'])) {
         }
 
 
+        function loadBoardCards() {
+            $.ajax({
+                  url: "loadMyCards.php",
+                  type: "POST",
+                  data: {},
+                  success: function(data) {
+                     var parsedJSON = JSON.parse(data); // data is the json from loadOpponents.php
+                      document.getElementById("id_myCards_div").innerHTML = ""; // we clear the div with id opponents so that we do not redraw the same opponents
+                     for (var key in parsedJSON) {
+    //<img class='currentCardImage' onclick='didSelectImage($tmp_cardID)' width='120px' src='$cardResourceURL' alt='last played card'>
+                        var id = parsedJSON[key]["cardid"];
+                        var imageSRC = parsedJSON[key]["imageSourceURL"];
+                        var imageToPlay = document.createElement('img');
+                        imageToPlay.className = 'currentCardImage';
+                        imageToPlay.src = imageSRC;
+                        imageToPlay.onclick = function() {
+                                              didSelectImage(id);
+                                          };
+                        imageToPlay.width = '120px';
+                        document.getElementById("id_myCards_div").appendChild(imageToPlay);
+                       }
+                  }
+              });
+
+
+        }
+
+
+
         function showMessage(messageHTML) {
             loadOpponents();
             loadMainBoard();
-
-            $("#id_myCards_div").load("loadMyCards.php", {
-
-            })
+            loadBoardCards();
 
             $.ajax({
                  url: "checkIfGameFinished.php",
