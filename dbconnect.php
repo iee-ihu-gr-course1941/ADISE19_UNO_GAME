@@ -1,7 +1,7 @@
 <?php
 $user='root';
 $pass='';
-$host='mysqladmin';
+$host='localhost';
 $db = 'uno';
 
 

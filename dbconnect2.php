@@ -1,5 +1,5 @@
 <?php
-$host='mysqladmin';
+$host='localhost';
 $db = 'uno';
 require_once "db_upass.php";
 
