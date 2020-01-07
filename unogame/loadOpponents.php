@@ -47,7 +47,7 @@ if ($isGameStarted == false) {
             // Here we load the opponents on top so we want not to show the current player in the opponents section
             if ($currentPlayerUserName != $username) {
                 // check if this opponent is the opponent that currently plays
-                $sql_select_current_player = "SELECT * FROM gametowhoplays where gamename = '$currentGameName'";
+                $sql_select_current_player = "SELECT 'userid' FROM gametowhoplays where gamename = '$currentGameName'";
                 $sql_select_current_player_result = mysqli_query($db, $sql_select_current_player);
                 $sql_select_current_player_result_firstRow = mysqli_fetch_assoc($sql_select_current_player_result);
                 $currentPlayerID = $sql_select_current_player_result_firstRow['userid'];
