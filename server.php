@@ -11,7 +11,7 @@ if (session_status() == PHP_SESSION_NONE) {
 	$_SESSION['success'] = "";
 
 	// connect to database
-    $db = mysqli_connect('localhost', 'root', 'Skaranikola', 'uno');
+    $db = mysqli_connect('localhost', 'it154459', 'Skaranikola', 'uno');
 	// REGISTER USER
 	if (isset($_POST['reg_user'])) {
 		// receive all input values from the form
