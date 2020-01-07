@@ -12,7 +12,7 @@ if (session_status() == PHP_SESSION_NONE) {
 	$_SESSION['success'] = "";
 
 	// connect to database
-    $db = mysqli_connect('localhost', 'it154459', $password, 'uno');
+    $db = new mysqli("localhost", "root", $password, 'uno',null,'/home/staff/asidirop/mysql/run/mysql.sock');
 	// REGISTER USER
 	if (isset($_POST['reg_user'])) {
 		// receive all input values from the form
