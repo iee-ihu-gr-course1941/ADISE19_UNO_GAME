@@ -352,8 +352,7 @@ if (isset($_GET['logout'])) {
 
 
     $(document).ready(function(){
-    		//var websocket = new WebSocket("ws://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME/unogame/php-socket.php");
-
+    		var url = "users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME/unogame/php-socket.php";
     		var websocket = new WebSocket(url.format({
     		    protocol: 'ws',
     		    hostname: window.location.hostname,
