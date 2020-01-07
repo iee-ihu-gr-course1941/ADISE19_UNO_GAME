@@ -5,7 +5,7 @@ if (session_status() == PHP_SESSION_NONE) {
 	//session_start();
 
 	// variable declaration
-	$username = "";
+	$username = "root";
 	$email    = "";
 	$errors = array(); 
 	$_SESSION['success'] = "";
