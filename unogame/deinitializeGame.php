@@ -12,7 +12,7 @@ $result = mysqli_query($db, $sql);
 $sql = "DELETE FROM gametoorder WHERE gameid = '$currentGameID'";
 $result = mysqli_query($db, $sql);
 
-$sql = "DELETE FROM gametowhoplays WHERE gameid = '$currentGameID'";
+$sql = "DELETE FROM gametowhoPlays WHERE gameid = '$currentGameID'";
 $result = mysqli_query($db, $sql);
 
 $sql = "DELETE FROM games WHERE gameid = '$currentGameID'";

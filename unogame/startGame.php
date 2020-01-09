@@ -107,11 +107,11 @@ $sql_get_players_of_game = "SELECT userid FROM gametoorder where playerorder = (
 $result_ID_first_player_sql_result = mysqli_query($db, $sql_get_players_of_game); // store first players id into a variable
 $firstrow_result_ID_first_player = mysqli_fetch_assoc($result_ID_first_player_sql_result);
 $firstPlayerID = $firstrow_result_ID_first_player['userid'];
-$sql_setUP_whoPlays = "INSERT INTO gametowhoplays (gamename, userid) VALUES ('$currentGameName', '$firstPlayerID')";
+$sql_setUP_whoPlays = "INSERT INTO gametowhoPlays (gamename, userid) VALUES ('$currentGameName', '$firstPlayerID')";
 if ($db->query($sql_setUP_whoPlays) === TRUE) {
         echo "Player with id $firstPlayerID plays first Succeed <p>";
 } else {
-       echo "INSERT INTO gametowhoplays (gamename, userid) VALUES ('$currentGameName', '$firstPlayerID')". $db->error;
+       echo "INSERT INTO gametowhoPlays (gamename, userid) VALUES ('$currentGameName', '$firstPlayerID')". $db->error;
 }
 
 //Now we call the function that checks if the next player is going to have any effect based on the first card
