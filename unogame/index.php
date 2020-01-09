@@ -51,12 +51,12 @@ if (isset($_GET['logout'])) {
                  var modal = document.getElementById("winnerModal");
                  modal.style.display = "block";
                  //$.redirectPost("getWinnerDetails.php");
-                $("winnerBody").load("getWinnerDetails.php", {
+                $("winnerBody").load("./getWinnerDetails.php", {
 
                  })
 
                  $.ajax({
-                      url: "getWinnerDetails.php",
+                      url: "./getWinnerDetails.php",
                       type: "POST",
                       data: {},
                       success: function(data) {
@@ -123,7 +123,7 @@ if (isset($_GET['logout'])) {
 
         function loadOpponents() {
             $.ajax({
-                  url: "loadOpponents.php",
+                  url: "./loadOpponents.php",
                   type: "POST",
                   data: {},
                   success: function(data) {
@@ -147,7 +147,7 @@ if (isset($_GET['logout'])) {
 
         function loadMainBoard() {
              $.ajax({
-                  url: "loadMainBoard.php",
+                  url: "./loadMainBoard.php",
                   type: "POST",
                   data: {},
                   success: function(data) {
@@ -205,7 +205,7 @@ if (isset($_GET['logout'])) {
 
         function loadBoardCards() {
             $.ajax({
-                  url: "loadMyCards.php",
+                  url: "./loadMyCards.php",
                   type: "POST",
                   data: {},
                   success: function(data) {
@@ -238,7 +238,7 @@ if (isset($_GET['logout'])) {
             loadBoardCards();
 
             $.ajax({
-                 url: "checkIfGameFinished.php",
+                 url: "./checkIfGameFinished.php",
                  type: "POST",
                  data: {},
                  success: function(data) {
@@ -264,10 +264,10 @@ if (isset($_GET['logout'])) {
             } else {
                 var dubugMode = false; // This variable is so that we can test with the php echo the results on functions on playcard.php and globalfunctions
                 if (dubugMode == true) {
-                    $.redirectPost("playCard.php", "selectedCardIDPassed", selectedCardID);
+                    $.redirectPost("./playCard.php", "selectedCardIDPassed", selectedCardID);
                 } else {
                     $.ajax({
-                            url: "playCard.php",
+                            url: "./playCard.php",
                             type: "POST",
                             data: {"selectedCardIDPassed": selectedCardID},
                             success: function(data) {
@@ -300,10 +300,10 @@ if (isset($_GET['logout'])) {
           function didClickPass() {
               var dubugMode = false; // This variable is so that we can test with the php echo the results on functions on playcard.php and globalfunctions
               if (dubugMode == true) {
-                  $.redirectPost("didClickPass.php");
+                  $.redirectPost("./didClickPass.php");
               } else {
                 $.ajax({
-                    url: "didClickPass.php",
+                    url: "./didClickPass.php",
                     type: "POST",
                     data: {},
                     success: function(data) {
@@ -317,7 +317,7 @@ if (isset($_GET['logout'])) {
 
           function didPickColor(color) {
              $.ajax({
-                 url: "playCard.php",
+                 url: "./playCard.php",
                  type: "POST",
                  data: {"selectedCardIDPassed": selectedCardIDForColorCase, "colorForBalader":color},
                  success: function(data) {
@@ -331,10 +331,10 @@ if (isset($_GET['logout'])) {
           function didClickPickACard() {
             var dubugMode = false; // This variable is so that we can test with the php echo the results on functions on playcard.php and globalfunctions
             if (dubugMode == true) {
-                $.redirectPost("pickACard.php");
+                $.redirectPost("./pickACard.php");
             } else {
                 $.ajax({
-                    url: "pickACard.php",
+                    url: "./pickACard.php",
                     type: "POST",
                     data: {},
                     success: function(data) {
@@ -393,7 +393,7 @@ if (isset($_GET['logout'])) {
 
     <script>
         $(document).ready(function () {
-            $("#startButton").load("checkIfAdminStartButton.php", {
+            $("#startButton").load("./checkIfAdminStartButton.php", {
 
             })
         })
@@ -404,7 +404,7 @@ if (isset($_GET['logout'])) {
         function buttonStartDidClick() {
                 document.getElementById('buttonStart').style.display='none';
                 //window.location.href = "./startGame.php"; // uncomment me to test start.php
-                $.get('startGame.php', function (data) {
+                $.get('./startGame.php', function (data) {
                     reloadUI();
                 });
 
@@ -412,7 +412,7 @@ if (isset($_GET['logout'])) {
     </script>
     <script>
         $(window).bind('beforeunload', function(){
-            $.get('deinitializeGame.php', function(data) {
+            $.get('./deinitializeGame.php', function(data) {
 
             });
         });
