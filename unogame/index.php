@@ -387,6 +387,7 @@ if (isset($_GET['logout'])) {
     <script>
         $(document).ready(function () {
                 loadOpponents();
+                showMessage(nil);
         })
     </script>
 
