@@ -73,7 +73,7 @@ function deleteFromGameToNotPlayedCards($_currentGameName,$_id_of_card_to_give_t
 
 function checkIfUserIsPlaying($userID, $gameName): Bool {
     global $db;
-    $sql_to_get_Now_Playing_UserID = "SELECT 'userid' from gametowhoPlays where gamename = '$gameName'";
+    $sql_to_get_Now_Playing_UserID = "SELECT userid from gametowhoPlays where gamename = '$gameName'";
     $sql_result_to_get_Now_Playing_UserID = mysqli_query($db, $sql_to_get_Now_Playing_UserID);
     $firstrow_sql_result_to_Now_Playing_UserID = mysqli_fetch_assoc($sql_result_to_get_Now_Playing_UserID);
     $currentPlayingUserID = $firstrow_sql_result_to_Now_Playing_UserID['userid'];
