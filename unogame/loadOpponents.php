@@ -1,6 +1,7 @@
 <?php
 include('../server.php');
 include './globalFunctions.php';
+error_reporting(E_ERROR | E_PARSE);
 
 $currentGameName = $_SESSION['gamename'];
 $currentPlayerUserName = $_SESSION['username'];
