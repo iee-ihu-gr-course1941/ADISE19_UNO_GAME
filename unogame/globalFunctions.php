@@ -145,7 +145,7 @@ function getDetailsOfCard($cardPlayedID): Card {
 
 function updateBaladerSelectedColor($currentGameName, $color) {
     global $db;
-    $sql_query = "UPDATE baladerselectedcolor set color = '$color' WHERE gamename = '$currentGameName'";
+    $sql_query = "UPDATE baladerSelectedColor set color = '$color' WHERE gamename = '$currentGameName'";
     if ($db->query($sql_query) === TRUE) {
         //echo "UPDATE baladerselectedcolor succeed new color: '$color'";
     } else {

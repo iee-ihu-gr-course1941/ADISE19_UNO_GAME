@@ -85,11 +85,11 @@ if ($db->query($sql_give_card_to_player) === TRUE) {
 deleteFromGameToNotPlayedCards($currentGameName,$id_of_first_card_in_deck);
 
 // Now we initialize the row in baladerSelectedColor table so that it can be updated with the selected color if it opens.id
-$sql_give_card_to_player = "INSERT INTO baladerselectedcolor (gamename, color) VALUES ('$currentGameName', '')";
+$sql_give_card_to_player = "INSERT INTO baladerSelectedColor (gamename, color) VALUES ('$currentGameName', '')";
 if ($db->query($sql_give_card_to_player) === TRUE) {
        // echo "INSERT INTO game_to_last_card ('$id_of_card_to_give_to_player', '$_tmp_userid') Succeed<p>";
 } else {
-       echo "Error on INSERT INTO baladerselectedcolor ('$id_of_card_to_give_to_player'". $db->error;
+       echo "Error on INSERT INTO baladerSelectedColor ('$id_of_card_to_give_to_player'". $db->error;g
 }
 
 

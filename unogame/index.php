@@ -213,7 +213,7 @@ if (isset($_GET['logout'])) {
                       document.getElementById("id_myCards_div").innerHTML = ""; // we clear the div with id opponents so that we do not redraw the same opponents
                      for (var key in parsedJSON) {
     //<img class='currentCardImage' onclick='didSelectImage($tmp_cardID)' width='120px' src='$cardResourceURL' alt='last played card'>
-                        var id = parsedJSON[key]["cardid"];
+                        let id = parsedJSON[key]["cardid"];
                         var imageSRC = parsedJSON[key]["imageSourceURL"];
                         var imageToPlay = document.createElement('img');
                         imageToPlay.className = 'currentCardImage';

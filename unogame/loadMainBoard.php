@@ -52,7 +52,7 @@ if ($isGameStarted == true) {
     // now we check if the last played card is balader so that we show the selected color in the board
     if (($lastCardValue == "balader") or ($lastCardValue == "baladerAddFour")) {
         $jsonToReturn->wasLastCardBalader = true;
-        $sql_query = "SELECT color from baladerselectedcolor where gamename = '$currentGameName'";
+        $sql_query = "SELECT color from baladerSelectedColor where gamename = '$currentGameName'";
         $sql_query_result = mysqli_query($db, $sql_query);
         $sql_query_result_first_row = mysqli_fetch_assoc($sql_query_result);
         $color = $sql_query_result_first_row['color'];
