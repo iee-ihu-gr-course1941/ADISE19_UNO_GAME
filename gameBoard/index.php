@@ -39,7 +39,7 @@ if (isset($_GET['logout'])) {
 <div>
     <?php  if (isset($_SESSION['username'])) : ?>
         <p>Welcome <strong><?php echo $_SESSION['username']; ?></strong></p>
-        <p> <a href="../logout.php" style="color: red;">logout</a> </p>
+        <p> <a href="../logout.php" class='logoutButton'>logout</a> </p>
     <?php endif ?>
 </div>
 
@@ -66,7 +66,7 @@ if (isset($_GET['logout'])) {
 <?php
         echo "<form class='content' action='createGame.php' method='POST'>";
             echo "<input name='gamename' placeholder='Game Name' value=''>";
-            echo "<button type='submit'> Create game </button>";
+            echo "<button type='submit' class='btn'> Create game </button>";
         echo "</form>";
 ?>
 

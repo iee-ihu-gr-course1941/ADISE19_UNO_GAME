@@ -6,20 +6,16 @@
     while ($row = mysqli_fetch_assoc($result)) {
         $gameName = $row['gamename'];
         echo "<form class='.content' action='joingame.php' method='POST'>";
-        echo "<p>";
         echo "   Game ID: ";
         echo "<b>";
         echo $row['gameid'];
         echo "</b>";
         echo "  Name: ";
-        echo "'$gameName'     ";
+        echo "<b>$gameName <b>    ";
         echo "<form class='.noBorder' action='joingame.php' method='POST'>";
         echo "<input name='gameName' placeholder='Game Name' value=$gameName hidden=true>";
-        echo "<button type='submit'> Join </button>";
+        echo "<button type='submit' class='btn'> Join </button>";
         echo "</form>";
-        echo "<p>";
-        echo "<p>";
-        echo "<p>";
         echo "</form>";
     }
 
