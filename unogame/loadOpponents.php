@@ -49,7 +49,7 @@ if ($isGameStarted == false) {
                 // check if this opponent is the opponent that currently plays
                 $sql_select_current_player = "SELECT 'userid' FROM gametowhoplays where gamename = '$currentGameName'";
                 $sql_select_current_player_result = mysqli_query($db, $sql_select_current_player);
-                if($sql_select_current_player_result) {
+                if($sql_select_current_player_result == true) {
                     $sql_select_current_player_result_firstRow = mysqli_fetch_assoc($sql_select_current_player_result);
                     $currentPlayerID = $sql_select_current_player_result_firstRow['userid'];
                     $isThisUsersOrder = false;
