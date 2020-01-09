@@ -311,7 +311,7 @@ function checkIfCurrentUserWon($currentGameName, $currentUserID) {
              console.log("<p>UPDATE games to finished failed  ". $db->error);
         }
         // Now we insert to gametowinner the winner ID
-        $sqlInsertWinner = "INSERT INTO gametowinner (gameName, winnerID) VALUES ('$currentGameName','$currentUserID')";
+        $sqlInsertWinner = "INSERT INTO gameToWinner (gameName, winnerID) VALUES ('$currentGameName','$currentUserID')";
         if ($db->query($sqlInsertWinner) === TRUE) {
             //echo "<p>Insert into gametowinner Succeed";
         } else {
