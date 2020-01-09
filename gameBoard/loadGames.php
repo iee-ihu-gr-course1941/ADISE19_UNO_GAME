@@ -12,7 +12,7 @@
         echo $row['gameid'];
         echo "</b>";
         echo "  Name: ";
-        echo "     ";
+        echo "'$gameName'     ";
         echo "<form class='.noBorder' action='joingame.php' method='POST'>";
         echo "<input name='gameName' placeholder='Game Name' value=$gameName hidden=true>";
         echo "<button type='submit'> Join </button>";
