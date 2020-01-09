@@ -209,11 +209,11 @@ function switchOrder($currentGameName, $currentPlayerID): Int { // returns the n
 
 function updateWhoPlays($currentGameName, $newPlayerID) {
     global $db;
-    $sql_query = "UPDATE gametowhoplays set userid = '$newPlayerID' WHERE gamename = '$currentGameName'";
+    $sql_query = "UPDATE gametowhoPlays set userid = '$newPlayerID' WHERE gamename = '$currentGameName'";
     if ($db->query($sql_query) === TRUE) {
        // echo "UPDATE gametowhoplays succeed new userid Players: '$newPlayerID'";
     } else {
-            console.log("UPDATE gametowhoplays new userid failed  ". $db->error);
+            console.log("UPDATE gametowhoPlays new userid failed  ". $db->error);
     }
 }
 
