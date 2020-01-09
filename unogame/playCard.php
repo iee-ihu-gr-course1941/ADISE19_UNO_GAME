@@ -2,7 +2,7 @@
 
 include('../server.php');
 include './globalFunctions.php';
-
+error_reporting(E_ERROR | E_PARSE);
 $not_your_turnError = "not_your_turn";
 $you_cant_play_this_cardError = "you_cant_play_this_card";
 $gameFinihsed = "game_has_finished";
