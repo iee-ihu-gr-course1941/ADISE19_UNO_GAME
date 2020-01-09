@@ -49,21 +49,23 @@ if ($isGameStarted == false) {
                 // check if this opponent is the opponent that currently plays
                 $sql_select_current_player = "SELECT 'userid' FROM gametowhoplays where gamename = '$currentGameName'";
                 $sql_select_current_player_result = mysqli_query($db, $sql_select_current_player);
-                $sql_select_current_player_result_firstRow = mysqli_fetch_assoc($sql_select_current_player_result);
-                $currentPlayerID = $sql_select_current_player_result_firstRow['userid'];
-                $isThisUsersOrder = false;
-                if (strcmp($currentPlayerID, $userID) == 0) {
-                    $isThisUsersOrder = true;
+                if($sql_select_current_player_result) {
+                    $sql_select_current_player_result_firstRow = mysqli_fetch_assoc($sql_select_current_player_result);
+                    $currentPlayerID = $sql_select_current_player_result_firstRow['userid'];
+                    $isThisUsersOrder = false;
+                    if (strcmp($currentPlayerID, $userID) == 0) {
+                        $isThisUsersOrder = true;
+                    }
+
+
+                    // Now we get the number of cards that the user has
+                    $sql_count_player_cards = "SELECT count(*) as total from useridcardassotiation where userid = '$userID' and gamename = '$currentGameName'";
+                    $sql_count_player_cards_result = mysqli_query($db, $sql_count_player_cards);
+                    $count_data = mysqli_fetch_assoc($sql_count_player_cards_result);
+                    $number_of_cards = $count_data['total'];
+
+                    $usersJSONABLEArray->append(array('name'=>$username,'number_of_cards'=>$number_of_cards, 'isPlaying'=>$isThisUsersOrder));
                 }
-
-
-                // Now we get the number of cards that the user has
-                $sql_count_player_cards = "SELECT count(*) as total from useridcardassotiation where userid = '$userID' and gamename = '$currentGameName'";
-                $sql_count_player_cards_result = mysqli_query($db, $sql_count_player_cards);
-                $count_data = mysqli_fetch_assoc($sql_count_player_cards_result);
-                $number_of_cards = $count_data['total'];
-
-                $usersJSONABLEArray->append(array('name'=>$username,'number_of_cards'=>$number_of_cards, 'isPlaying'=>$isThisUsersOrder));
                 //echoPlayer($username, $isThisUsersOrder, $number_of_cards);
             }
     }
