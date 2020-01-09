@@ -47,7 +47,7 @@ while ($row = mysqli_fetch_assoc($result_getAllPlayers)) {
         echo "Error on sql_insert_player_into_order creating table: " . $db->error;
     }
 
-    $sql_insert_into_hasPickedACard = "INSERT INTO userToHasPickedACard (gameName, userid, hasPickedACard) VALUES ('$currentGameName', '$_tmp_userid', false)";
+    $sql_insert_into_hasPickedACard = "INSERT INTO userToHasPickedACard (gamename, userid, hasPickedACard) VALUES ('$currentGameName', '$_tmp_userid', false)";
     if ($db->query($sql_insert_into_hasPickedACard) === TRUE) {
         echo " <p> <h1> INSERT INTO userToHasPickedACard Succeed </h1> <p>";
     } else {
