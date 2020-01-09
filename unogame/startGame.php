@@ -89,7 +89,7 @@ $sql_give_card_to_player = "INSERT INTO baladerSelectedColor (gamename, color) V
 if ($db->query($sql_give_card_to_player) === TRUE) {
        // echo "INSERT INTO game_to_last_card ('$id_of_card_to_give_to_player', '$_tmp_userid') Succeed<p>";
 } else {
-       echo "Error on INSERT INTO baladerSelectedColor ('$id_of_card_to_give_to_player'". $db->error;g
+       echo "Error on INSERT INTO baladerSelectedColor ('$id_of_card_to_give_to_player'". $db->error;
 }
 
 
