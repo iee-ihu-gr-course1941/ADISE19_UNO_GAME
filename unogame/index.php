@@ -373,8 +373,6 @@ if (isset($_GET['logout'])) {
 
 
     		$('#id_reload_UI').on("submit",function(event){
-    			event.preventDefault();
-    			$('#chat-user').attr("type","hidden");
     			var messageJSON = {
     				chat_user: "userData",
     				chat_message: "reload"
