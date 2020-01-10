@@ -62,7 +62,7 @@ class SocketHandler {
 		"Upgrade: websocket\r\n" .
 		"Connection: Upgrade\r\n" .
 		"WebSocket-Origin: $host_name\r\n" .
-		"WebSocket-Location: ws://$host_name:$port/demo/shout.php\r\n".
+		"WebSocket-Location: wss://$host_name:$port/demo/shout.php\r\n".
 		"Sec-WebSocket-Accept:$secAccept\r\n\r\n";
 		socket_write($client_socket_resource,$buffer,strlen($buffer));
 	}
