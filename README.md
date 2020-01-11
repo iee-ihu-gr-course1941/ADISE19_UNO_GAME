@@ -15,7 +15,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 
 * Στον πίνακα users αποθηκέυονται όλοι οι χρήστες αφού κάνουν register και μετά μπορούν να κάνουν logout και ξανά login μέσω αυτού του πίνακα. <br>
 * Το password του χρήστη αποθηκεύεται στη βάση με md5 κωδικοποίησης ***md5($password_1); στο αρχείο server.php***<br>
-
+<br><br><br><br>
 **cards** - createCardsTable.php
 
 | Attribute    | Description                             | Values        |
@@ -27,8 +27,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 * Ο πίνακας cards λειτουργεί ως μία αποθήκη καρτών και δεν τροποποιείται παρά μόνο όταν τρέξει το script createCardsTable.php <br>
 * Όλες οι κάρτεσ που βρίσκονται στο φάκελο Assets/cards έχουν σαν όνομα τη μορφή value_color.png <br>
 * Με αυτόν τον τρόπο γίνεται από το id της κάρτας η αντιστοιχία με την εικόνα <br>
-
-
+<br><br><br><br>
 **games** - creategamesTable.php
 
 | Attribute    | Description | Values        |
@@ -42,7 +41,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 * Στον πίνακα games αποθηκεύεται κάθε παιχνίδι που δημιουργείται. <br>
 * Στην σελίδα <b> ADISE19_UNO_GAME/gameBoard/ </b> φαίνονται μόνο τα παιχνίδια των οποίων το started value είναι false. <br>
 * Όταν η τιμή finished γίνει true τότε οι χρήστες στο παιχνίδι δεν μπορούν να συνεχίσουν να παίζουν.<br>
-
+<br><br><br><br>
 **gametousersconnection** - gametousersconnection.php
                    
 | Attribute    | Description | Values        |
@@ -51,7 +50,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 | userid     | Τα id του παίχτη | INT(11) |
 
 * Στον πίνακα gametousersconnection εισάγονται οι παίκτες για κάθε παιχνίδι.
-
+<br><br><br><br>
 **gametoorder** - gameΤoΟrder.php
                    
 | Attribute    | Description | Values        |
@@ -63,8 +62,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 * Ο πίνακας gametoorder χρησιμοποιείται για να κρατιέται η θέση των χρηστών. <br>
 * Η εισαγωγή των παικτών γίνεται όταν ο admin ξεκινήσει το παιχνίδι με βάση τον πίνακα gametousersconnection.<br>
 * Ο πίνακας αλλάζει τιμές στην μεταβλητή playerorder μόνο αν παιχτει η κάρτα switch order<br>
-
-
+<br><br><br><br>
 **gametowhoPlays** - gameToWhoPlays.php
                    
 | Attribute    | Description | Values        |
@@ -74,7 +72,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 
 * Στον πίνακα gametowhoPlays ορίζεται για κάθε παιχνίδι (gamename) το id του χρήστη ο οποίος παίζει. <br>
 * Ο υπολογισμός γίνεται μέσω του πίνακα game to order μέσω της μεθόθου switchOrder που βρίσκεται στο αρχείο unogame/globalFunctions.php<br>
-
+<br><br><br><br>
 **createUserIDCards** - createUserIDCards.php
                    
 | Attribute    | Description | Values        |
@@ -85,7 +83,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 
 * Στον πίνακα createUserIDCards γίνεται η αντιστοιχία ανάμεσα σε παίκτες και κάρτες. <br>
 * Με αυτόν τον τρόπο φορτώνονται οι κάρτες στην οθόνη του χρήστη. <br>
-
+<br><br><br><br>
 **game_to_last_card** - createGameToLastCard.php
 
 | Attribute    | Description | Values        |
@@ -95,7 +93,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 
 * Ο πίνακας game_to_last_card χρησιμοποιείται για να αποθηκεύεται το id της κάρτας που παίχτηκαι τελευταία στο board.<br>
 * Κάθε φορά που παίζεται μία κάρτα γίνεται update η γραμμή με την τιμή gamename = όνομα του παιχνιδιού που παίχτηκε η κάρτα<br>
-
+<br><br><br><br>
 **game_to_not_played_cards** - createGameToNotPlayedCards.php
 
 | Attribute    | Description | Values        |
@@ -106,7 +104,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 * Στον πίνακα game_to_not_played_cards αποθηκεύονται όλες οι κάρτες που δεν έχουν παιχτεί στο παιχνίδι.<br>
 * Όταν ξεκινάει το παιχνίδι στον πίνακα προστίθονται 108 γραμμές που είναι και οι κάρτες που έχει μία τράπουλα uno.<br>
 * Καθε φορά που ένας παίκτης παίρνει μία κάρτα παίρνει μία από τις υπόλοιπες που υπάρχουν στον πίνακα game_to_not_played_cards και η γραμμή αυτή διαγράφεται.<br>
-
+<br><br><br><br>
 **gameToWinner** - createGameToWinner.php
 
 | Attribute    | Description | Values        |
@@ -116,8 +114,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 
 * Στον πίνακα gameToWinner αποθηκεύεται το id του παίχτη που κέρδισε το παιχνίδι.<br>
 * Όταν ένα παιχνίδι στον πίνακα games έχει τιμή finished = true τότε οι παίκτες βλέπου το μήνυμα και το όνομα του χρήστη που κέρδισε. <br>
-
-
+<br><br><br><br>
 **userToHasPickedACard** - createUserToHasPickedACard.php
                    
 | Attribute    | Description | Values        |
