@@ -6,7 +6,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 
 **users** - createDataBaseScript.php
 
-| Attribute    | Description                             | Values        |
+| Μεταβλητή    | Περιγραφή                             | Τύπος        |
 | :---:        |     :---:                               |    :---:      |
 | id          | ID χρήστη                   | int(11)  |
 | username     | Όνομα χρήστη                          | varchar(100)        |
@@ -18,7 +18,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 <br><br><br><br>
 **cards** - createCardsTable.php
 
-| Attribute    | Description                             | Values        |
+| Μεταβλητή    | Περιγραφή                             | Τύπος        |
 | :---:        |     :---:                               |    :---:      |
 | cardid          | ID κάρτας                   | int(11)  |
 | value     | Τιμή κάρτας Αριθμός, αλλαγή φοράς κτλ.                          | varchar(100)        |
@@ -30,7 +30,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 <br><br><br><br>
 **games** - creategamesTable.php
 
-| Attribute    | Description | Values        |
+| Μεταβλητή    | Περιγραφή | Τύπος        |
 | :---:        |     :---:     |    :---:      |
 | gameid          | ID παιχνιδιού | int(11)  |
 | gamename     | Το όνομα του παιχνιδιού | varchar(100)|
@@ -44,7 +44,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 <br><br><br><br>
 **gametousersconnection** - gametousersconnection.php
                    
-| Attribute    | Description | Values        |
+| Μεταβλητή    | Περιγραφή | Τύπος        |
 | :---:        |     :---:     |    :---:      |
 | gameName     | Το όνομα του παιχνιδιού | varchar(100)|
 | userid     | Τα id του παίχτη | INT(11) |
@@ -53,7 +53,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 <br><br><br><br>
 **gametoorder** - gameΤoΟrder.php
                    
-| Attribute    | Description | Values        |
+| Μεταβλητή    | Περιγραφή | Τύπος        |
 | :---:        |     :---:     |    :---:      |
 | gameName     | Το όνομα του παιχνιδιού | varchar(100)|
 | userid     | Τα id του παίχτη | INT(11) |
@@ -65,7 +65,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 <br><br><br><br>
 **gametowhoPlays** - gameToWhoPlays.php
                    
-| Attribute    | Description | Values        |
+| Μεταβλητή    | Περιγραφή | Τύπος        |
 | :---:        |     :---:     |    :---:      |
 | gamename     | Το όνομα του παιχνιδιού | varchar(100)|
 | userid     | Τα id του παίχτη | INT(11) |
@@ -75,7 +75,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 <br><br><br><br>
 **createUserIDCards** - createUserIDCards.php
                    
-| Attribute    | Description | Values        |
+| Μεταβλητή    | Περιγραφή | Τύπος        |
 | :---:        |     :---:     |    :---:      |
 | gameName     | Το όνομα του παιχνιδιού | varchar(100)|
 | userid     | Τα id των παιχτών | INT(11) |
@@ -86,7 +86,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 <br><br><br><br>
 **game_to_last_card** - createGameToLastCard.php
 
-| Attribute    | Description | Values        |
+| Μεταβλητή    | Περιγραφή | Τύπος        |
 | :---:        |     :---:     |    :---:      |
 | gamename     | Το όνομα του παιχνιδιού | varchar(100)|
 | lastCardId     | Το id της κάρτας που παίχτηκε τελευταία στο παιχνίδι | INT |
@@ -96,7 +96,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 <br><br><br><br>
 **game_to_not_played_cards** - createGameToNotPlayedCards.php
 
-| Attribute    | Description | Values        |
+| Μεταβλητή    | Περιγραφή | Τύπος        |
 | :---:        |     :---:     |    :---:      |
 | gamename     | Το όνομα του παιχνιδιού | varchar(100)|
 | availableCardId     | Τα id των καρτών που είναι δεν έχουν παιχτεί | INT |
@@ -107,7 +107,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 <br><br><br><br>
 **gameToWinner** - createGameToWinner.php
 
-| Attribute    | Description | Values        |
+| Μεταβλητή    | Περιγραφή | Τύπος        |
 | :---:        |     :---:     |    :---:      |
 | gameName     | Το όνομα του παιχνιδιού | varchar(100)|
 | winnerID     | Τα id του παίχτη που κέρδισε το παιχνίδι | INT(11) |
@@ -117,7 +117,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 <br><br><br><br>
 **userToHasPickedACard** - createUserToHasPickedACard.php
                    
-| Attribute    | Description | Values        |
+| Μεταβλητή    | Περιγραφή | Τύπος        |
 | :---:        |     :---:     |    :---:      |
 | gameName     | Το όνομα του παιχνιδιού | varchar(100)|
 | userid     | Τα id του παίχτη | INT(11) |
