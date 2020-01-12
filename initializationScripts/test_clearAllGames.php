@@ -72,4 +72,11 @@
     }else {
     echo "gameToWinner failed on clear<p>";
     }
+
+    $sql = "DELETE FROM gametoVersion";
+    if ($db->query($sql) === TRUE) {
+        echo "gametoVersion cleared successfully<p>";
+    }else {
+        echo "gametoVersion failed on clear<p>";
+    }
 ?>
