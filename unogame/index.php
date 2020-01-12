@@ -483,6 +483,7 @@ if (isset($_GET['logout'])) {
     $('#closeID').click(function(){
         var modal = document.getElementById("myModal");
         modal.style.display = "none";
+        header("location: ../loadGames.php");
     });
 
     $('#winnerModalcloseID').click(function(){
