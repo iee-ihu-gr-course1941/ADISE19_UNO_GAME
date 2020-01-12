@@ -37,6 +37,17 @@ if (isset($_GET['logout'])) {
                       latestGameVersion = latestVersionNewNumber;
                       if (shouldRefresh == true) {
                             showMessage("reload_UI");
+
+                            //checkIfItsYourTurn
+                            $.ajax({
+                                   url: "./checkIfItsYourTurn.php",
+                                   type: "POST",
+                                   data: {},
+                                   success: function(response) {
+                                        document.getElementById("id_subtitle").innerHTML = response;
+                                   }
+                               })
+
                         }
                       }
                       })
@@ -310,8 +321,7 @@ if (isset($_GET['logout'])) {
 
 
          function updateSubtitleStatus() {
-            document.getElementById("id_subtitle").innerHTML = "Game started";
-
+            //document.getElementById("id_subtitle").innerHTML = "Game started";
          }
 
          function buttonStartDidClick() {
@@ -448,7 +458,7 @@ if (isset($_GET['logout'])) {
 </head>
 <body>
 <div class="header">
-    <h4 id="id_subtitle">waiting for host... </h4>
+    <h4 id="id_subtitle"> </h4>
     <div id="startButton">
     </div>
 

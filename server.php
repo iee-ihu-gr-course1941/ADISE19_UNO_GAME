@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
     include('pass.php');
 	// variable declaration
-	$username = "root";
+	$username = "";
 	$email    = "";
 	$errors = array(); 
 	$_SESSION['success'] = "";
