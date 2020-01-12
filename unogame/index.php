@@ -458,12 +458,9 @@ if (isset($_GET['logout'])) {
 </head>
 <body>
 <div class="header">
-<div id='div_playing' class='btn-grad'>
     <h1 id="id_subtitle" style='color:#e52d27'> </h1>
-</div>
-    <div id="startButton">
+<div id="startButton">
     </div>
-
 </div>
 
 <div id='myModal' class="modal">
