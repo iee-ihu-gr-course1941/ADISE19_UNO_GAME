@@ -184,7 +184,6 @@ function applyCardEffects($currentGameName, $cardID, $currentPlayerID, $colorFor
        $nextPlayerID = switchOrder($currentGameName, $currentPlayerID);
     }
     updateWhoPlays($currentGameName, $nextPlayerID);
-    increaseGameVersionNumber($currentGameName);
 }
 
 function switchOrder($currentGameName, $currentPlayerID): Int { // returns the nextPlayerID
@@ -211,6 +210,7 @@ function switchOrder($currentGameName, $currentPlayerID): Int { // returns the n
 function updateWhoPlays($currentGameName, $newPlayerID) {
     global $db;
     $sql_query = "UPDATE gametowhoPlays set userid = '$newPlayerID' WHERE gamename = '$currentGameName'";
+    increaseGameVersionNumber($currentGameName);
     if ($db->query($sql_query) === TRUE) {
        // echo "UPDATE gametowhoplays succeed new userid Players: '$newPlayerID'";
     } else {
