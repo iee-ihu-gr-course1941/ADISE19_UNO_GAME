@@ -1,5 +1,8 @@
 <?php
-
+class RefreshObjectToReturn {
+    public $shouldUpdate = false;
+    public $latestVersionNewNumber = 0;
+}
 
     include('../server.php');
     $gameName = $_SESSION['gamename'];
@@ -10,7 +13,7 @@
     $sqlResult_get_latestVersionNumber_first_row = mysqli_fetch_assoc($sqlResult_get_latestVersionNumber);
     $latestVersionNumber = $sqlResult_get_latestVersionNumber_first_row['versionNumber'];
 
-    $jsonToReturn = new ObjectToReturn();
+    $jsonToReturn = new RefreshObjectToReturn();
 
     if ($latestVersionNumber > $latestCashedVersionNumber)  {
         $jsonToReturn->shouldUpdate = true;
