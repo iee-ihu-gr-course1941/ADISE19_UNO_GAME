@@ -29,7 +29,7 @@ if (isset($_GET['logout'])) {
              $.ajax({
                    url: "./checkForRefresh.php",
                    type: "POST",
-                   data: {'latestCashedVersionNumber': latestGameVersion},
+                   data: {"latestCashedVersionNumber": latestGameVersion},
                    success: function(data) {
                       var parsedJSON = JSON.parse(data); // data is the json from loadOpponents.php
                       var shouldRefresh = parsedJSON["shouldUpdate"];
