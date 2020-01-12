@@ -346,7 +346,7 @@ function increaseGameVersionNumber($currentGameName) {
 
 function updateGameVersionNumber($currentGameName,$gameVersion) {
     global $db;
-    $sql_query = "UPDATE gametoVersion set versionNumber = '$gameVersion' where gameName = 'currentGameName'";
+    $sql_query = "UPDATE gametoVersion set versionNumber = '$gameVersion' where gameName = '$currentGameName'";
     if ($db->query($sql_query) === TRUE) {
         console.log("<p>UPDATE gametoVersion updated!");
     } else {
