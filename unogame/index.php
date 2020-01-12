@@ -52,7 +52,7 @@ if (isset($_GET['logout'])) {
                       }
                       })
 
-         }, 5000);
+         }, 3500);
 
 
     </script>
