@@ -458,7 +458,7 @@ if (isset($_GET['logout'])) {
 </head>
 <body>
 <div class="header">
-    <h2 id="id_subtitle" style='color:#B31217'> </h2>
+    <h2 id="id_subtitle" style='color:#e52d27'> </h2>
     <div id="startButton">
     </div>
 
