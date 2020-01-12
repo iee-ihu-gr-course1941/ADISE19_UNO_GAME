@@ -12,7 +12,7 @@
         $adminUserName = $_SESSION['username'];
         echo $adminUserName;
         $gameName = $_POST['gamename'];
-        if (strcmp($cardThatJustPlayedValue,'') > 0) {
+        if (strcmp($gameName,'') > 0) {
             $_SESSION['gamename'] = $gameName;
 
             $sql = "SELECT id FROM users WHERE username='$adminUserName'";
