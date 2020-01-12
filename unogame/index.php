@@ -394,36 +394,6 @@ if (isset($_GET['logout'])) {
 
 
 
-
-    $(document).ready(function(){
-    		var websocket = new WebSocket("wss://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME/unogame/php-socket.php");
-
-
-    		websocket.onopen = function(event) {
-    			showMessage("Connection is established!");
-    		}
-    		websocket.onmessage = function(event) {
-    		    updateSubtitleStatus()
-    			var Data = JSON.parse(event.data);
-    			showMessage("message="+Data.message_type+" "+Data.message+"");
-    		};
-
-    		websocket.onerror = function(event){
-    			showMessage("Problem due to some Error");
-    		};
-    		websocket.onclose = function(event){
-    			showMessage("Connection Closed");
-    		};
-
-
-    		$('#id_reload_UI').on("submit",function(event){
-    			var messageJSON = {
-    				chat_user: "userData",
-    				chat_message: "reload"
-    			};
-    			websocket.send(JSON.stringify(messageJSON));
-    		});
-    	});
     </script>
 
     <script>
