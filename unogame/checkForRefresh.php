@@ -5,7 +5,7 @@
     $gameName = $_SESSION['gamename'];
     $latestCashedVersionNumber = $_POST['latestCashedVersionNumber'];
 
-    $sql_get_latestVersionNumber = "SELECT versionNumber from gametoVersion where gameName = '$currentGameName'";
+    $sql_get_latestVersionNumber = "SELECT versionNumber from gametoVersion where gameName = '$gameName'";
     $sqlResult_get_latestVersionNumber = mysqli_query($db, $sql_get_latestVersionNumber);
     $sqlResult_get_latestVersionNumber_first_row = mysqli_fetch_assoc($sqlResult_get_latestVersionNumber);
     $latestVersionNumber = $sqlResult_get_latestVersionNumber_first_row['versionNumber'];
