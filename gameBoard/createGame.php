@@ -43,7 +43,7 @@
 
             header("location: ../unogame");
          } else {
-         
+            header("location: ../index.php");
          }
 
 ?>
