@@ -73,6 +73,20 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 * Στον πίνακα gametowhoPlays ορίζεται για κάθε παιχνίδι (gamename) το id του χρήστη ο οποίος παίζει. <br>
 * Ο υπολογισμός γίνεται μέσω του πίνακα game to order μέσω της μεθόθου switchOrder που βρίσκεται στο αρχείο unogame/globalFunctions.php<br>
 <br><br><br><br>
+**gametoVersion** - gameToVersion.php
+                   
+| Μεταβλητή    | Περιγραφή | Τύπος        |
+| :---:        |     :---:     |    :---:      |
+| gameName     | Το όνομα του παιχνιδιού | varchar(100)|
+| versionNumber  | Τα version που έχει αυτή τη στιγμή το παιχνίδι του παίχτη | INT(11) |
+
+* Ο πίνακας gametoVersion χρησιμοποιείται για να γίνεται update το board κάθε φορά που παίζει ένας παίχτης.
+* Η μεταβλητή versionNumber αυξάνεται κάθε φορά που:
+    * κάποιος παίζει μία κάρτα 
+    * κάποιος κάνει πάσο
+    * ο admin ξεκινάει το παιχνίδι
+* Οι παίχτες ελέγχουν αν έχει μεγαλώσει το version number του παιχνιδιού κάθες 3,5 δευτερόλεπτα.
+<br><br><br><br>
 **createUserIDCards** - createUserIDCards.php
                    
 | Μεταβλητή    | Περιγραφή | Τύπος        |
