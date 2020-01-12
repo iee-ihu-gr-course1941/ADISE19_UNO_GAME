@@ -20,7 +20,7 @@
         $firstrow_sql_result_NumberOfPlayers = mysqli_fetch_assoc($sql_result_NumberOfPlayers);
         $numberOfPlayers = $firstrow_sql_result_NumberOfPlayers['countPlayers'];
 
-        echo "<b> Players: $numberOfPlayers   "
+        echo "<b> Players: $numberOfPlayers   ";
 
         echo "<form class='.noBorder' action='joingame.php' method='POST'>";
         echo "<input name='gameName' placeholder='Game Name' value=$gameName hidden=true>";
