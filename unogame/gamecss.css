@@ -123,6 +123,10 @@ oppositCurrentCardImage:hover {
     text-align: center;
 }
 
+.itsYourTurnText {
+    color: #B31217;
+}
+
 .content {
     text-align: center;
     margin: 0px auto;

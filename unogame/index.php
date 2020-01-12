@@ -458,7 +458,7 @@ if (isset($_GET['logout'])) {
 </head>
 <body>
 <div class="header">
-    <h2 id="id_subtitle"> </h2>
+    <h2 id="id_subtitle" class='itsYourTurnText' > </h2>
     <div id="startButton">
     </div>
 
