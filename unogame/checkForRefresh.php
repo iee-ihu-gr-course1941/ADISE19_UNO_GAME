@@ -18,7 +18,6 @@ class RefreshObjectToReturn {
     if ($latestVersionNumber > $latestCashedVersionNumber)  {
         $jsonToReturn->shouldUpdate = true;
         $jsonToReturn->latestVersionNewNumber = $latestVersionNumber;
-        echo ("Refresh");
     } else {
         $jsonToReturn->shouldUpdate = false;
         $jsonToReturn->latestVersionNewNumber = $latestVersionNumber;
