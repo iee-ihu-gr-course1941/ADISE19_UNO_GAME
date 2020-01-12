@@ -48,6 +48,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
     float: right;
     font-size: 28px;
     font-weight: bold;
+    background-image: linear-gradient(to right, #e52d27 0%, #b31217 51%, #e52d27 100%);
 }
 
 .close:hover,
