@@ -22,10 +22,15 @@
 
         echo " Players:<b> $numberOfPlayers   </b>";
 
-        echo "<form class='.noBorder' action='joingame.php' method='POST'>";
-        echo "<input name='gameName' placeholder='Game Name' value=$gameName hidden=true>";
-        echo "<button type='submit' class='btn'> Join </button>";
-        echo "</form>";
+        if ($numberOfPlayers < 10) {
+            echo "<form class='.noBorder' action='joingame.php' method='POST'>";
+            echo "<input name='gameName' placeholder='Game Name' value=$gameName hidden=true>";
+            echo "<button type='submit' class='btn'> Join </button>";
+            echo "</form>";
+        } else {
+            echo "<b> FULL </b>";
+        }
+
         echo "</form>";
     }
 
