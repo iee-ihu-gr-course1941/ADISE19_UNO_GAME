@@ -184,6 +184,7 @@ function applyCardEffects($currentGameName, $cardID, $currentPlayerID, $colorFor
        $nextPlayerID = switchOrder($currentGameName, $currentPlayerID);
     }
     updateWhoPlays($currentGameName, $nextPlayerID);
+    increaseGameVersionNumber($currentGameName);
 }
 
 function switchOrder($currentGameName, $currentPlayerID): Int { // returns the nextPlayerID
@@ -330,6 +331,26 @@ function checkIfGameHasFinished($currentGameName):Bool {
         return false;
     } else {
         return true;
+    }
+}
+
+function increaseGameVersionNumber($currentGameName) {
+    global $db;
+    $sql_get_latestVersionNumber = "SELECT versionNumber from gametoVersion where gameName = '$currentGameName'";
+    $sqlResult_get_latestVersionNumber = mysqli_query($db, $sql_get_latestVersionNumber);
+    $sqlResult_get_latestVersionNumber_first_row = mysqli_fetch_assoc($sqlResult_get_latestVersionNumber);
+    $latestVersionNumber = $sqlResult_get_latestVersionNumber_first_row['versionNumber'];
+    $increasedVersionNumber = $latestVersionNumber + 1;
+    updateGameVersionNumber($currentGameName,$increasedVersionNumber);
+}
+
+function updateGameVersionNumber($currentGameName,$gameVersion) {
+    global $db;
+    $sql_query = "UPDATE gametoVersion set versionNumber = '$gameVersion' where gameName = 'currentGameName'";
+    if ($db->query($sql_query) === TRUE) {
+        console.log("<p>UPDATE gametoVersion updated!");
+    } else {
+         console.log("<p>UPDATE gametoVersion failed!!  ". $db->error);
     }
 }
 

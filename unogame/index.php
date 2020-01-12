@@ -22,6 +22,32 @@ if (isset($_GET['logout'])) {
     <link rel="stylesheet" type="text/css" href="popUp.css">
 
 
+    <script> // HERE we do the polling so that the game is being refreshed
+         var latestGameVersion = 0;
+         var interval = setInterval(function() {
+
+             $.ajax({
+                   url: "./checkForRefresh.php",
+                   type: "POST",
+                   data: {'LatestCashedVersionNumber': latestGameVersion},
+                   success: function(data) {
+                      var parsedJSON = JSON.parse(data); // data is the json from loadOpponents.php
+                      var shouldRefresh = parsedJSON["shouldUpdate"];
+                      var latestVersionNewNumber = parsedJSON["latestVersionNewNumber"];
+                      latestGameVersion = latestVersionNewNumber;
+                      if (shouldRefresh == true) {
+                            showMessage("reload_UI");
+                        }
+                      }
+                      })
+
+         }, 5000);
+
+
+    </script>
+
+
+
     <script>
         $.extend(
         {

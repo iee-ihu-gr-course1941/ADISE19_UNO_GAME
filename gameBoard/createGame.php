@@ -12,6 +12,10 @@
         $adminUserName = $_SESSION['username'];
         echo $adminUserName;
         $gameName = $_POST['gamename'];
+
+        $sqlInitializeGameToVersion = "INSERT INTO gameToVersion (gameName,versionNumber) VALUES ('$currentGameName','1')";
+        $result_sqlInitializeGameToVersion = mysqli_query($db, $sqlInitializeGameToVersion); // here we initialize for the game the game to version. This is going to be used for polling // Auto refresh
+
         if (strcmp($gameName,'') > 0) {
             $_SESSION['gamename'] = $gameName;
 

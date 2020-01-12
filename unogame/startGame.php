@@ -10,7 +10,6 @@ $resultID = mysqli_query($db, $sql);
 $sql_getAllPlayers = "SELECT * FROM gametousersconnection where gameName = '$currentGameName'";
 $result_getAllPlayers = mysqli_query($db, $sql_getAllPlayers);
 
-
 // ---------- Add the deck of cards to the game to not played table ------- //
 
 $_cardIds_cashed = [];
@@ -119,5 +118,7 @@ if ($db->query($sql_setUP_whoPlays) === TRUE) {
 // $id_of_first_card_in_deck is the card that randomly oppened in the board
 
 checkIfPlayerWillGetExtraCards($firstPlayerID, $id_of_first_card_in_deck);
+
+updateGameVersionNumber($currentGameName,2);
 
 ?>
