@@ -483,13 +483,13 @@ if (isset($_GET['logout'])) {
     $('#closeID').click(function(){
         var modal = document.getElementById("myModal");
         modal.style.display = "none";
-        header("location: ../loadGames.php");
+        window.location.href = "https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME/gameBoard/";
     });
 
     $('#winnerModalcloseID').click(function(){
         var winnerModal = document.getElementById("winnerModal");
         winnerModal.style.display = "none";
-        header("location: ../loadGames.php");
+        window.location.href = "https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME/gameBoard/";
     });
 
 </script>
