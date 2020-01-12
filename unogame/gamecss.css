@@ -90,6 +90,14 @@ oppositCurrentCardImage:hover {
     padding: 2px 16px;
 }
 
+.unoOneCardImage {
+    position: absolute;
+    top: 0px;
+    right: 0;
+    width: 60px;
+    height: 60px;
+}
+
 .aParent div {
     float: left;
     clear: none;

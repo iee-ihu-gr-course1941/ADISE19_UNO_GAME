@@ -154,6 +154,14 @@ if (isset($_GET['logout'])) {
              cardTypeDiv.appendChild(containerDiv);
              aParent.appendChild(cardTypeDiv);
              parentDiv.appendChild(aParent);
+             // Uno one card!
+
+             var unoImage = document.createElement('img');
+             unoImage.className = 'unoOneCardImage';
+             unoImage.src = "Assets/user_uno.png";
+             if (numberOfCards == 1) {
+                parentDiv.appendChild(unoImage);
+             }
              document.getElementById("opponents").appendChild(parentDiv);
         }
 
