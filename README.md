@@ -71,7 +71,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 | userid     | Τα id του παίχτη | INT(11) |
 
 * Στον πίνακα gametowhoPlays ορίζεται για κάθε παιχνίδι (gamename) το id του χρήστη ο οποίος παίζει. <br>
-* Ο υπολογισμός γίνεται μέσω του πίνακα game to order μέσω της μεθόθου switchOrder που βρίσκεται στο αρχείο unogame/globalFunctions.php<br>
+* Ο υπολογισμός γίνεται μέσω του πίνακα game to order μέσω της μεθόθου updateWhoPlays που βρίσκεται στο αρχείο unogame/globalFunctions.php<br>
 <br><br><br><br>
 **gametoVersion** - gameToVersion.php
                    
