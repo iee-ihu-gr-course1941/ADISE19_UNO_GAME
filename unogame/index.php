@@ -472,7 +472,7 @@ if (isset($_GET['logout'])) {
         <h1 id="winnerBody"></h1>
     </div>
     <div class="modal-footer">
-      <h3>Congratulatyions!!!!</h3>
+      <h3>   </h3>
     </div>
   </div>
 </div>
