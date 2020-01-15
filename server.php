@@ -34,7 +34,7 @@ if (session_status() == PHP_SESSION_NONE) {
 		if (count($errors) == 0) {
 			$password = md5($password_1);//encrypt the password before saving in the database
 
-			$sql_query = "SELECT userid from users where username = '$username'";
+			$sql_query = "SELECT id from users where username = '$username'";
             $sql_query_result = mysqli_query($db, $sql_query);
             $numberOfResults = mysqli_num_rows($sql_query_result); // We get the result of that query and if we have a result then the user wasn't the last one in the queue
             if ($numberOfResults > 0) { // user already exists
