@@ -1,5 +1,7 @@
 # Παιχνίδι Uno
 https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME 
+
+
 ## Κανόνες
 * Από 2 εως 9 παίκτες.
 * Ο host όταν πατήσει start ξεκινάει το παιχνίδι και μοιράζονται 7 κάρτες στον κάθε παίκτη
@@ -14,12 +16,12 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 * Ένας παίκτης δεν μπορεί να τραβήξει στην σειρά του παραπάνω από 1 κάρτες
 * Όλες οι κάρτες είναι 108
 ## Users api
-| URI    | METHOD                           | ΕΝΕΡΓΕΙΑ        |RETURN STATUS  |
+| URI    | METHOD                           | ΕΝΕΡΓΕΙΑ        |RETURN Example  |
 | :---:        |     :---:                    |    :---:      |    :---:      |
-|       | POST  |     |
-|       | POST  |     |
-|       | POST  |     |
-|       | POST  |     |
+| /unogame/loadMainBoard.php      | POST  |   {"isGameStarted":true,"cardSourceUL":"Assets\/cards\/0_blue.png","wasLastCardBalader":false,"baladerColor":""}  |
+| /unogame/loadOpponents.php      | POST  |   {name: "username", number_of_cards: "7", isPlaying: false}  |
+| /unogame/loadMyCards.php      | POST  |  {"0":{"imageSourceURL":"Assets\/cards\/1_red.png","cardid":"1"},"1":{"imageSourceURL":"Assets\/cards\/3_green.png","cardid":"12"},"2":{"imageSourceURL":"Assets\/cards\/loseOrder_blue.png","cardid":"42"},"3":{"imageSourceURL":"Assets\/cards\/8_yellow.png","cardid":"79"},"4":{"imageSourceURL":"Assets\/cards\/7_green.png","cardid":"28"},"5":{"imageSourceURL":"Assets\/cards\/4_blue.png","cardid":"62"},"6":{"imageSourceURL":"Assets\/cards\/6_green.png","cardid":"72"}}   |
+|  /unogame/checkForRefresh.php    | POST  |   {"shouldUpdate":true,"latestVersionNewNumber":"2"}  |
 
 
 ## Bάση uno
