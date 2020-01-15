@@ -38,6 +38,7 @@ if (session_status() == PHP_SESSION_NONE) {
             $sql_query_result = mysqli_query($db, $sql_query);
             $numberOfResults = mysqli_num_rows($sql_query_result); // We get the result of that query and if we have a result then the user wasn't the last one in the queue
             if ($numberOfResults > 0) { // user already exists
+                $_SESSION['errorUSerExists'] = $username;
                 header('location: index.php');
             } else {
                 $query = "INSERT INTO users (username, email, password)

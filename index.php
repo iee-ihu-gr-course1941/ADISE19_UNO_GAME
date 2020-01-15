@@ -26,6 +26,14 @@
 	<div class="content">
 
 		<!-- notification message -->
+		<?php
+		if (isset($_SESSION['errorUSerExists'])) {
+		    var tmUSer = $_SESSION['errorUSerExists'];
+		    alert("user $tmUSer exists");
+		    unset($_SESSION['errorUSerExists']);
+		}
+		?>
+
 		<?php if (isset($_SESSION['success'])) : ?>
 			<div class="error success" >
 				<h3>
