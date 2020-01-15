@@ -13,6 +13,16 @@ if (session_status() == PHP_SESSION_NONE) {
 
 	// connect to database
     $db = new mysqli("localhost", "root", $password, 'uno',null,'/home/student/it/2015/it154459/mysql/run/mysql.sock');
+
+
+    		if (isset($_SESSION['errorUSerExists'])) {
+    		    $tmUSer = $_SESSION['errorUSerExists'];
+    		    array_push($errors, "user '$tmUSer' exists");
+    		    unset($_SESSION['errorUSerExists']);
+    		}
+
+
+
 	// REGISTER USER
 	if (isset($_POST['reg_user'])) {
 		// receive all input values from the form
@@ -39,7 +49,7 @@ if (session_status() == PHP_SESSION_NONE) {
             $numberOfResults = mysqli_num_rows($sql_query_result); // We get the result of that query and if we have a result then the user wasn't the last one in the queue
             if ($numberOfResults > 0) { // user already exists
                 $_SESSION['errorUSerExists'] = $username;
-                header('location: index.php');
+                header('location: ./register.php');
             } else {
                 $query = "INSERT INTO users (username, email, password)
                 					  VALUES('$username', '$email', '$password')";
