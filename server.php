@@ -33,13 +33,21 @@ if (session_status() == PHP_SESSION_NONE) {
 		// register user if there are no errors in the form
 		if (count($errors) == 0) {
 			$password = md5($password_1);//encrypt the password before saving in the database
-			$query = "INSERT INTO users (username, email, password) 
-					  VALUES('$username', '$email', '$password')";
-			mysqli_query($db, $query);
 
-			$_SESSION['username'] = $username;
-			$_SESSION['success'] = "You are now logged in";
-			header('location: index.php');
+			$sql_query = "SELECT userid from users where username = '$username'";
+            $sql_query_result = mysqli_query($db, $sql_query);
+            $numberOfResults = mysqli_num_rows($sql_query_result); // We get the result of that query and if we have a result then the user wasn't the last one in the queue
+            if ($numberOfResults > 0) { // user already exists
+                header('location: index.php');
+            } else {
+                $query = "INSERT INTO users (username, email, password)
+                					  VALUES('$username', '$email', '$password')";
+                mysqli_query($db, $query);
+
+                $_SESSION['username'] = $username;
+                $_SESSION['success'] = "You are now logged in";
+                header('location: index.php');
+            }S
 		}
 
 	}
