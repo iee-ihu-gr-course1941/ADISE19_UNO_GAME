@@ -15,7 +15,7 @@ https://users.iee.ihu.gr/~it154459/ADISE19_UNO_GAME
 * Ένας παίκτης δεν μπορεί να πάει πάσο αν δεν έχει τραβήξει πρώτα κάρτα
 * Ένας παίκτης δεν μπορεί να τραβήξει στην σειρά του παραπάνω από 1 κάρτες
 * Όλες οι κάρτες είναι 108
-## Users api
+## Uno Game API
 | URI    | METHOD                           | Example        
 | :---:        |     :---:                    |    :---:     
 | /unogame/loadMainBoard.php      | POST  |   {"isGameStarted":true,"cardSourceUL":"Assets\/cards\/0_blue.png","wasLastCardBalader":false,"baladerColor":""}  |
