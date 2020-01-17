@@ -102,7 +102,7 @@ if (($cardThatJustOpened->value == "balader") or ($cardThatJustOpened->value == 
 
 // Now we configure the value of the player that playes first
 // Get all players that play in gametoorder table
-$sql_get_players_of_game = "SELECT userid FROM gametoorder where playerorder = (SELECT MIN(playerorder) FROM gametoorder)"; // GET THE PLAYER WITH THE min order sql query
+$sql_get_players_of_game = "SELECT userid FROM gametoorder where gameName = '$currentGameName' AND playerorder = (SELECT MIN(playerorder) FROM gametoorder)"; // GET THE PLAYER WITH THE min order sql query
 $result_ID_first_player_sql_result = mysqli_query($db, $sql_get_players_of_game); // store first players id into a variable
 $firstrow_result_ID_first_player = mysqli_fetch_assoc($result_ID_first_player_sql_result);
 $firstPlayerID = $firstrow_result_ID_first_player['userid'];
