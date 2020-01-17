@@ -14,11 +14,10 @@
         $gameName = $_POST['gamename'];
 
         $sql = "";
-        $sql_query = "SELECT * from gametoVersion where username = '$gameName'";
+        $sql_query = "SELECT * from gametoVersion where gameName = '$gameName'";
         $sql_query_result = mysqli_query($db, $sql_query);
         $numberOfResults = mysqli_num_rows($sql_query_result); // We get the result of that query and if we have a result then the user wasn't the last one in the queue
         if ($numberOfResults > 0) {
-        
             header("location: ../index.php");
         } else {
             $sqlInitializeGameToVersion = "INSERT INTO gametoVersion (gameName,versionNumber) VALUES ('$gameName','1')";
