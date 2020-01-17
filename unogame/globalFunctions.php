@@ -246,7 +246,7 @@ function getNextPlayerID($currentGameName, $currentPlayerID): Int {
 
 function getFirstPlayersID($currentGameName): Int {
     global $db;
-    $sql_query = "SELECT userid from gametoorder where playerorder = '1'";
+    $sql_query = "SELECT userid from gametoorder where playerorder = '1' and gameName = '$currentGameName'";
     $sql_query_result = mysqli_query($db, $sql_query);
     $sql_query_result_first_row = mysqli_fetch_assoc($sql_query_result);
     $firstPlayerUserID = $sql_query_result_first_row['userid']; //Now we have the order of the current player
