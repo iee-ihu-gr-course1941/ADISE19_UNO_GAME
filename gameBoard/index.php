@@ -11,6 +11,9 @@ if (isset($_GET['logout'])) {
     unset($_SESSION['username']);
     header("location: ../login.php");
 }
+
+unset($_SESSION['gamename']);
+unset($_SESSION['isAdmin']);
 ?>
 
 
