@@ -76,7 +76,6 @@ if (isset($_GET['logout'])) {
     <script>
 
         function checkForErrors(data) {
-            document.getElementById("winnerModalcloseID").style.visibility = "hidden";
             if (data.localeCompare("not_your_turn") == 0) {
                 alert("It's not your turn!! ");
             } else if (data.localeCompare("you_cant_play_this_card") == 0) {
@@ -86,7 +85,6 @@ if (isset($_GET['logout'])) {
             } else if (data.localeCompare("you_have_already_Picked_a_card") == 0) {
               alert("You have already picked a card");
             } else  if (data.localeCompare("game_has_finished") == 0) {
-                document.getElementById("winnerModalcloseID").style.visibility = "visible";
                  var modal = document.getElementById("winnerModal");
                  modal.style.display = "block";
                  //$.redirectPost("getWinnerDetails.php");
@@ -447,7 +445,6 @@ if (isset($_GET['logout'])) {
   <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header">
-      <button id='closeID' class='close'>x</button>
       <h2>Pick a color</h2>
     </div>
     <div class="modal-body">
