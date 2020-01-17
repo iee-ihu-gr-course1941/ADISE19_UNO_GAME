@@ -85,6 +85,7 @@ if (isset($_GET['logout'])) {
             } else if (data.localeCompare("you_have_already_Picked_a_card") == 0) {
               alert("You have already picked a card");
             } else  if (data.localeCompare("game_has_finished") == 0) {
+                document.getElementById("winnerModalcloseID").hidden = false;
                  var modal = document.getElementById("winnerModal");
                  modal.style.display = "block";
                  //$.redirectPost("getWinnerDetails.php");
@@ -465,7 +466,7 @@ if (isset($_GET['logout'])) {
   <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header">
-      <button id='winnerModalcloseID' class='close'>x</button>
+      <button id='winnerModalcloseID' hidden=true class='close'>x</button>
       <h2>Game finished!!!</h2>
     </div>
     <div class="modal-body">
